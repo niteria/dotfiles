@@ -5,8 +5,12 @@ set nocompatible
 " $ pyenv virtualenv --venv-base-dir $HOME/local/virtualenvs/ neovim3
 " $ source $HOME/local/virtualenvs/neovim3/bin/activate
 " $ pip3 install neovim
-let g:python3_host_prog = '~/local/virtualenvs/neovim3/bin/python'
-let g:python_host_prog = '~/local/virtualenvs/neovim2/bin/python'
+if filereadable("~/local/virtualenvs/neovim3/bin/python")
+  let g:python3_host_prog = '~/local/virtualenvs/neovim3/bin/python'
+endif
+if filereadable("~/local/virtualenvs/neovim2/bin/python")
+  let g:python_host_prog = '~/local/virtualenvs/neovim2/bin/python'
+endif
 " to get ruby working you need neovim-ruby-host somehow on path
 " it gets installed with "gem install neovim"
 
