@@ -42,6 +42,10 @@ Plug 'ludovicchabant/vim-lawrencium'
 Plug 'tpope/vim-vinegar'
 " Haskell enhancements
 Plug 'parsonsmatt/vim2hs'
+" Undo tree
+Plug 'mbbill/undotree'
+" Coerce: crm - CoeRce Mixed-case, crs - CoeRce Snake-case
+Plug 'tpope/tpope-vim-abolish'
 call plug#end()
 
 " use inkpot colorscheme
@@ -58,6 +62,15 @@ nmap <S-Tab> :tabprev<enter>
 " backup edited files
 set backup
 set backupdir=~/.vimbackup
+
+" persist undo
+if has("persistent_undo")
+    set undodir=~/local/.undodir/
+    set undofile
+endif
+
+" map undotree to U
+nnoremap U :UndotreeToggle<cr>
 
 " This unsets the "last search pattern" register by hitting return
 nnoremap <silent><CR> :noh<CR>
