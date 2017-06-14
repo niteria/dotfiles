@@ -5,14 +5,18 @@ set nocompatible
 " $ pyenv virtualenv --venv-base-dir $HOME/local/virtualenvs/ neovim3
 " $ source $HOME/local/virtualenvs/neovim3/bin/activate
 " $ pip3 install neovim
-if filereadable("~/local/virtualenvs/neovim3/bin/python")
-  let g:python3_host_prog = '~/local/virtualenvs/neovim3/bin/python'
+let python3_path = expand('$HOME/local/virtualenvs/neovim3/bin/python')
+if filereadable(python3_path)
+  let g:python3_host_prog = expand(python3_path)
 endif
-if filereadable("~/local/virtualenvs/neovim2/bin/python")
-  let g:python_host_prog = '~/local/virtualenvs/neovim2/bin/python'
+let python2_path = expand('$HOME/local/virtualenvs/neovim2/bin/python')
+if filereadable(python2_path)
+  let g:python_host_prog = expand(python2_path)
 endif
 " to get ruby working you need neovim-ruby-host somehow on path
 " it gets installed with "gem install neovim"
+" Here's how to disable it
+" let g:loaded_ruby_provider = 1
 
 " do :PlugInstall to install the plugins
 call plug#begin('~/.config/nvim/plugged')
@@ -46,6 +50,10 @@ Plug 'parsonsmatt/vim2hs'
 Plug 'mbbill/undotree'
 " Coerce: crm - CoeRce Mixed-case, crs - CoeRce Snake-case
 Plug 'tpope/tpope-vim-abolish'
+" Autocompletion framework
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Autocompletion from tmux buffers, integrates with deoplete
+Plug 'wellle/tmux-complete.vim'
 call plug#end()
 
 " use inkpot colorscheme
@@ -224,3 +232,6 @@ autocmd BufReadPost *.vim    let b:comment_prefix = "\" "
 
 " 7 lines of context when scrolling
 set scrolloff=7
+
+" Turn on deoplete
+let g:deoplete#enable_at_startup = 1
