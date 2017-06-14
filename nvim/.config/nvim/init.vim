@@ -103,6 +103,17 @@ nnoremap <silent> <localleader>j :CommandTJump<cr>
 let g:CommandTFileScanner = 'watchman'
 " make CommandT open in a new tab
 let g:CommandTAcceptSelectionTabMap = '<CR>'
+" --- I might not need this
+let g:CommandTAcceptSelectionSplitMap = ''
+let g:CommandTAcceptSelectionVSplitMap = ''
+let g:CommandTAcceptSelectionMap = ''
+let g:CommandTAcceptSelectionCommand = 'tabe'
+let g:CommandTAcceptSelectionTabCommand = 'tabe'
+let g:CommandTAcceptSelectionSplitCommand = 'tabe'
+let g:CommandTAcceptSelectionVSplitCommand = 'tabe'
+" --- endof
+" to make CommandT work better
+set switchbuf=usetab
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -213,10 +224,10 @@ inoremap jk <esc>
 " always have a status line
 set laststatus=2
 
-" let g:haskell_conceal              = 0
-" let g:haskell_multiline_strings    = 1
-" let g:haskell_conceal_enumerations = 0
-" let g:haskell_haddock              = 1
+let g:haskell_conceal              = 0
+let g:haskell_multiline_strings    = 1
+let g:haskell_conceal_enumerations = 0
+let g:haskell_haddock              = 1
 
 " no mouse integration from terminus
 let g:TerminusMouse=0
