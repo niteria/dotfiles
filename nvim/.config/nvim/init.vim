@@ -246,3 +246,6 @@ set scrolloff=7
 
 " Turn on deoplete
 let g:deoplete#enable_at_startup = 1
+
+" Increase memory limit for patterns from 1mb to 10mb
+set maxmempattern=10000
