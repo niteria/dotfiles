@@ -54,6 +54,10 @@ Plug 'tpope/tpope-vim-abolish'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Autocompletion from tmux buffers, integrates with deoplete
 Plug 'wellle/tmux-complete.vim'
+" [- : Move to previous line of lesser indent than the current line.
+Plug 'jeetsukumaran/vim-indentwise'
+" Make QuickFix window do what I want
+Plug 'yssl/QFEnter'
 call plug#end()
 
 " use inkpot colorscheme
@@ -249,3 +253,12 @@ let g:deoplete#enable_at_startup = 1
 
 " Increase memory limit for patterns from 1mb to 10mb
 set maxmempattern=10000
+
+" Do :Ack with a word under cursor with K
+nmap K <Plug>(FerretAckWord)
+" Do :Ack with a selected text
+"   Unfortunately broken, doesn't handle spaces
+" vmap K "xy:let @x = substitute(@x, ' ', '\\ ', 'g')<CR>:Ack --literal <C-R>x<CR>
+
+" Don't open a QuickFix window after ,<tab>
+let g:qfenter_enable_autoquickfix = 0
