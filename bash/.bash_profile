@@ -91,8 +91,16 @@ alias cdj="jump"
 ### } Marks
 
 
-alias twgr='grep -R -i -I . -e '
-alias twgs='grep -R -I . -e '
+alias twgr='grep --exclude-dir="\.git" --exclude-dir="stage2" -R -i -I . -e '
+alias twgs='grep --exclude-dir="\.git" --exclude-dir="stage2" -R -I . -e '
+
+function set_window_title () {
+  if [ -z $TMUX ]; then
+    echo -e '\033k'$1'\033\\'
+  else
+    tmux set -q set-titles-string "$1"
+  fi
+}
 
 
 #  SETUP CONSTANTS
@@ -227,6 +235,10 @@ calc_elapsed() {
   echo $elapsed
 }
 
+if [ -f $HOME/.scripts/scm-prompt.sh ]; then
+    source $HOME/.scripts/scm-prompt.sh
+fi
+
 export PROMPT_COMMAND=__prompt_command
 
 function __prompt_command() {
@@ -244,10 +256,11 @@ function __prompt_command() {
   PS1+="$IBlack$Time12h " # time
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
   PS1+="$BYellow\w" # working dir
-  PS1+="$BBlue$(parse_git_branch)\n" # git branch
+  PS1+="$BBlue$(_dotfiles_scm_info '(%s)')\n" # git/hg branch
   PS1+="$BWhite$" # prompt
   PS1+="$Color_Off "
   history -a
+  set_window_title "bash (idle)"
   return 0
 }
 
@@ -255,6 +268,7 @@ function __prompt_command() {
 
 preexec () { 
   set_begin
+  set_window_title "$(echo "$1" | cut -f3- -d' ')"
 }
 preexec_invoke_exec () {
   [ -n "$COMP_LINE" ] && return  # do nothing if completing
@@ -264,16 +278,8 @@ preexec_invoke_exec () {
 }
 trap 'preexec_invoke_exec' DEBUG
 
-alias vim='vim -p'
 alias vimu='vim -u ~/.vimrc-fast --noplugin'
 export TERM=screen-256color
-
-alias gdb_dump_stacks='gdb -ex "set pagination 0" -ex "thread apply all bt" --batch -p'
-function tmux_detach_all() {
-  for sess in `tmux ls | grep attached | sed -e 's/:.*//g'`; do tmux detach -s "$sess"; done
-}
-alias gam='git add -u && git commit --amend --no-edit'
-alias gn='git show --name-only'
 
 ### disable Ctrl-S
 stty stop ''
@@ -281,6 +287,7 @@ stty start ''
 stty -ixon
 stty -ixoff
 
+export PATH=$PATH:$HOME/.scripts/
 
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
@@ -289,4 +296,9 @@ fi
 ## machine specific stuff
 if [ -f ~/.bash_profile_custom ]; then
   . ~/.bash_profile_custom
+fi
+
+# added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh
 fi

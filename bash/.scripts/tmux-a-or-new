@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sess=`tmux ls | grep -v attached | sed -e 's/:.*//g' | head -1`
+if [ -z "$sess" ]
+then
+  tmux
+else
+  tmux a -t $sess
+fi
