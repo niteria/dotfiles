@@ -228,7 +228,7 @@ dotfiles_clean() {
   if [ -z "$st" ]; then
     true
   else
-    echo "☹  "
+    echo "${BIRed}☹  "
   fi
 }
 
