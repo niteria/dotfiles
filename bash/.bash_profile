@@ -203,7 +203,7 @@ dotfiles_clean() {
   if [ -z "$st" ]; then
     true
   else
-    echo "☹ "
+    echo "☹  "
   fi
 }
 
@@ -267,7 +267,7 @@ function __prompt_command() {
   
   PS1=""
   PS1+="$STATUS " # status code
-  PS1+="$(dotfiles_clean) " # show if dotfiles repo is unclean
+  PS1+="$(dotfiles_clean)" # show if dotfiles repo is unclean
   PS1+="$IBlack$(calc_elapsed) " # time
   PS1+="$IBlack$Time12h " # time
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
