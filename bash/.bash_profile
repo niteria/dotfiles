@@ -99,7 +99,7 @@ alias twgs='grep --exclude-dir="\.git" --exclude-dir="stage2" -R -I . -e '
 
 function set_window_title () {
   if [ -z $TMUX ]; then
-    echo -e '\033k'$1'\033\\'
+    echo -ne "\033]0;"$1"\007"
   else
     tmux set -q set-titles-string "$1"
   fi
