@@ -8,6 +8,8 @@ fi
 # preexec_invoke_exec requires default format
 unset HISTTIMEFORMAT
 
+DOTFILES_DIR="$(dirname $(dirname $(realpath ~/.bash_profile)))"
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -195,6 +197,16 @@ parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
+dotfiles_clean() {
+  local st=$(git --git-dir="$DOTFILES_DIR/.git" \
+                 --work-tree="$DOTFILES_DIR" status --porcelain)
+  if [ -z "$st" ]; then
+    true
+  else
+    echo "☹ "
+  fi
+}
+
 human_time() {
   local s=$1
   local days=$((s / (60*60*24)))
@@ -254,7 +266,8 @@ function __prompt_command() {
   fi
   
   PS1=""
-  PS1+=$STATUS" " # status code
+  PS1+="$STATUS " # status code
+  PS1+="$(dotfiles_clean) " # show if dotfiles repo is unclean
   PS1+="$IBlack$(calc_elapsed) " # time
   PS1+="$IBlack$Time12h " # time
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
