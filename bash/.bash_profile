@@ -5,6 +5,9 @@ if [ -f ~/.bashrc ]; then
   . ~/.bashrc
 fi
 
+# preexec_invoke_exec requires default format
+unset HISTTIMEFORMAT
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -268,12 +271,12 @@ function __prompt_command() {
 
 preexec () { 
   set_begin
-  set_window_title "$(echo "$1" | cut -f3- -d' ')"
+  set_window_title "$1"
 }
 preexec_invoke_exec () {
   [ -n "$COMP_LINE" ] && return  # do nothing if completing
   [ "$BASH_COMMAND" = "$PROMPT_COMMAND" ] && return # don't cause a preexec for $PROMPT_COMMAND
-  local this_command=`history 1 | sed -e "s/^[ ]*[0-9]*[ ]*//g"`;
+  local this_command=$(history 1 | cut -b8-)
   preexec "$this_command"
 }
 trap 'preexec_invoke_exec' DEBUG
