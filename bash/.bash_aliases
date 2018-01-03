@@ -38,7 +38,9 @@ function gg() {
 }
 
 alias ghcclean-stage2='rm -rf compiler/stage2; rm -rf libraries/*/dist-install'
-alias ghcm='make -j60; iterm_notify "GHC build done!"'
+# via _NPROCESSORS_ONLN
+NUM_CORES=$(getconf _NPROCESSORS_ONLN)
+alias ghcm='make -j'$NUM_CORES'; iterm_notify "GHC build done!"'
 alias ghcv='./validate; iterm_notify "Validate done."'
 alias st2='sed -i "s/^#stage=2/stage=2/" mk/build.mk'
 alias st1='sed -i "s/^stage=2/#stage=2/" mk/build.mk'
