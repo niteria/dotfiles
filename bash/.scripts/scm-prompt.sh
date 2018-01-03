@@ -67,8 +67,11 @@ _dotfiles_scm_info()
   d=$PWD
   while : ; do
     if test -d "$d/.git" ; then
-      git=$d
+      git="$d/.git/"
       break
+    elif test -f "$d/.git" ; then
+      git=$(cat "$d/.git")
+      git=${git#gitdir: }
     elif test -d "$d/.hg" ; then
       hg=$d
       break
@@ -130,32 +133,32 @@ _dotfiles_scm_info()
     fi
     br="$br$extra"
   elif test -n "$git" ; then
-    if test -f "$git/.git/HEAD" ; then
-      read br < "$git/.git/HEAD"
+    if test -f "$git/HEAD" ; then
+      read br < "$git/HEAD"
       case $br in
         ref:\ refs/heads/*) br=${br#ref: refs/heads/} ;;
         *) br=$(echo $br | cut -c 1-7) ;;
       esac
-      if [ -f "$git/.git/rebase-merge/interactive" ]; then
-        b="$(cat "$git/.git/rebase-merge/head-name")"
+      if [ -f "$git/rebase-merge/interactive" ]; then
+        b="$(cat "$git/rebase-merge/head-name")"
         b=${b#refs/heads/}
         br="$br|REBASE-i|$b"
-      elif [ -d "$git/.git/rebase-merge" ]; then
-        b="$(cat "$git/.git/rebase-merge/head-name")"
+      elif [ -d "$git/rebase-merge" ]; then
+        b="$(cat "$git/rebase-merge/head-name")"
         b=${b#refs/heads/}
         br="br|REBASE-m|$b"
       else
-        if [ -d "$git/.git/rebase-apply" ]; then
-          if [ -f "$git/.git/rebase-apply/rebasing" ]; then
+        if [ -d "$git/rebase-apply" ]; then
+          if [ -f "$git/rebase-apply/rebasing" ]; then
             br="$br|REBASE"
-          elif [ -f "$git/.git/rebase-apply/applying" ]; then
+          elif [ -f "$git/rebase-apply/applying" ]; then
             br="$br|AM"
           else
             br="$br|AM/REBASE"
           fi
-        elif [ -f "$git/.git/MERGE_HEAD" ]; then
+        elif [ -f "$git/MERGE_HEAD" ]; then
           br="$br|MERGE"
-        elif [ -f "$git/.git/BISECT_LOG" ]; then
+        elif [ -f "$git/BISECT_LOG" ]; then
           br="$br|BISECT"
         fi
       fi
