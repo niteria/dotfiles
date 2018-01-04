@@ -73,7 +73,7 @@ nmap <S-Tab> :tabprev<enter>
 
 " backup edited files
 set backup
-set backupdir=~/.vimbackup
+set backupdir=~/.vimbackup//
 
 " persist undo
 if has("persistent_undo")
@@ -167,7 +167,7 @@ set foldlevel=10000
 imap <CR> <CR> <BS>
 
 " directory for the swap file
-set directory=~/.vimswp,.,~/tmp,/var/tmp,/tmp
+set directory=~/.vimswp//,.,~/tmp,/var/tmp,/tmp
 
 " manually set filetypes
 autocmd BufRead TARGETS setlocal filetype=python
