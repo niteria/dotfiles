@@ -60,6 +60,10 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'yssl/QFEnter'
 " Ghcid - a tiny Haskell IDE
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
+" Typescript support
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+
 call plug#end()
 
 " use inkpot colorscheme
@@ -181,6 +185,9 @@ autocmd FileType python set ts=4 | set shiftwidth=4 | set expandtab |
   \ set autoindent | set softtabstop=4
 
 autocmd FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
+
+" set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 " kill any trailing whitespace on save
 autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text
