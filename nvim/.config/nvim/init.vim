@@ -58,6 +58,8 @@ Plug 'wellle/tmux-complete.vim'
 Plug 'jeetsukumaran/vim-indentwise'
 " Make QuickFix window do what I want
 Plug 'yssl/QFEnter'
+" Ghcid - a tiny Haskell IDE
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 call plug#end()
 
 " use inkpot colorscheme
