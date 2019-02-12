@@ -281,6 +281,14 @@ fi
 
 export PROMPT_COMMAND=__prompt_command
 
+function _virtualenv () {
+  if test -z "$VIRTUAL_ENV" ; then
+    true
+  else
+    echo "[`basename \"$VIRTUAL_ENV\"`]"
+  fi
+}
+
 function __prompt_command() {
   local EXIT="$?"
 
@@ -297,7 +305,8 @@ function __prompt_command() {
   PS1+="$IBlack$Time12h " # time
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
   PS1+="$BYellow\w" # working dir
-  PS1+="$BBlue$(_dotfiles_scm_info '(%s)')\n" # git/hg branch
+  PS1+="$BBlue$(_dotfiles_scm_info '(%s)')" # git/hg branch
+  PS1+="$BGreen$(_virtualenv)\n"
   PS1+="$BWhite$" # prompt
   PS1+="$Color_Off "
   history -a
