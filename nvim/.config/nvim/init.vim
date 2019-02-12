@@ -63,6 +63,8 @@ Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
 " Typescript support
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+" Projectionist for .c .cpp .cc <-> .h file switching
+Plug 'tpope/vim-projectionist'
 
 call plug#end()
 
@@ -211,16 +213,6 @@ nnoremap gf <C-w>gf
 " highlight the 81st column of wide lines...
 set colorcolumn=81
 
-" switching back and forth between .cpp and .h files
-function! SwitchSourceHeader()
-  if (expand ("%:e") == "cpp")
-    find %:t:r.h
-  else
-    find %:t:r.cpp
-  endif
-endfunction
-nmap ,s :call SwitchSourceHeader()<CR>
-
 " increase open tab limit
 set tabpagemax=200
 
@@ -271,3 +263,21 @@ nmap K <Plug>(FerretAckWord)
 
 " Don't open a QuickFix window after ,<tab>
 let g:qfenter_enable_autoquickfix = 0
+
+" switching back and forth between .cpp and .h files
+nmap ,s :A<CR>
+let g:projectionist_heuristics = {
+      \ '*': {
+      \   '*.h': {
+      \     'alternate': [ '{}.cpp', '{}.cc', '{}.c' ] 
+      \   },
+      \   '*.cpp': {
+      \     'alternate': '{}.h'
+      \   },
+      \   '*.c': {
+      \     'alternate': '{}.h'
+      \   },
+      \   '*.cc': {
+      \     'alternate': '{}.h'
+      \   }
+      \ }}
