@@ -266,6 +266,8 @@ let g:qfenter_enable_autoquickfix = 0
 
 " switching back and forth between .cpp and .h files
 nmap ,s :A<CR>
+" TODO: do it per filetype like 
+" https://www.reddit.com/r/vim/comments/76qzoc/advanced_projectionist_templates/doiaxjd
 let g:projectionist_heuristics = {
       \ '*': {
       \   '*.h': {
