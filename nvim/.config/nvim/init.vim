@@ -65,6 +65,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 " Projectionist for .c .cpp .cc <-> .h file switching
 Plug 'tpope/vim-projectionist'
+" Display Github url of the current file with :GitHubURL
+Plug 'pgr0ss/vim-github-url'
 
 call plug#end()
 
