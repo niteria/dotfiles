@@ -192,7 +192,7 @@ autocmd FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 " kill any trailing whitespace on save
-autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text
+autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text,make
   \ autocmd BufWritePre <buffer>
   \ :%s/\s\+$//e
 
