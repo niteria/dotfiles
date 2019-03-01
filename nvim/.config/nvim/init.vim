@@ -299,5 +299,14 @@ function! TmuxCopyBuffers()
     let files = substitute(files, '\n',' ','g')
     exe '!tmux-load-buffer ' . shellescape(&t_te . files)
 endfunction
-" Do TmuxCopyBuffers on exit
-au VimLeave * call TmuxCopyBuffers()
+
+function! TmuxCopyBuffersAndLeave()
+    call TmuxCopyBuffers()
+    quitall
+endfunction
+
+" Do TmuxCopyBuffers on exit (disabled)
+"au VimLeave * call TmuxCopyBuffers()
+
+" Add :Q
+command Q :call TmuxCopyBuffersAndLeave()
