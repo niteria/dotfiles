@@ -1,0 +1,1 @@
+realpath "$@" | tr '\n' ' ' | tmux loadb -
