@@ -47,3 +47,6 @@ sudo gem install neovim
 ```
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
+
+In Tmux:
+`Ctrl-B I` to install plugins.
