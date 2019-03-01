@@ -285,3 +285,19 @@ let g:projectionist_heuristics = {
       \     'alternate': '{}.h'
       \   }
       \ }}
+
+" Take the list of visible buffers and put them in the tmux buffer (clipboard)
+function! TmuxCopyBuffers()
+    redir => files
+    :ls a
+    redir END
+    " Regex to strip out everything from :ls but the buffer filenames
+    let files = substitute(files, '^[^"]*"', '', 'g')
+    let files = substitute(files, '"[^"]*\n[^"]*"', '\n', 'g')
+    let files = substitute(files, '"[^"]*$','','g')
+    " make space separated
+    let files = substitute(files, '\n',' ','g')
+    exe '!tmux-load-buffer ' . shellescape(&t_te . files)
+endfunction
+" Do TmuxCopyBuffers on exit
+au VimLeave * call TmuxCopyBuffers()
