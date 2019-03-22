@@ -337,7 +337,7 @@ stty start ''
 stty -ixon
 stty -ixoff
 
-export PATH=$PATH:$HOME/.scripts/
+export PATH=$PATH:$HOME/.scripts/:$HOME/.local/bin/
 
 ## machine specific stuff
 if [ -f ~/.bash_profile_custom ]; then
