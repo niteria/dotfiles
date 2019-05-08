@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+rm -rf ~/.zoekt/
+for i in */.git; do $GOPATH/bin/zoekt-index ${i/.git/}; done
