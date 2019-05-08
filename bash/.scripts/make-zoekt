@@ -2,4 +2,4 @@
 set -e
 
 rm -rf ~/.zoekt/
-for i in */.git; do $GOPATH/bin/zoekt-index ${i/.git/}; done
+for i in */.git; do $HOME/go/bin/zoekt-index ${i/.git/}; done
