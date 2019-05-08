@@ -222,6 +222,12 @@ parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
+_sandbox() {
+  if [[ "$BUILD_ROOT" =~ builds_ ]]; then
+    echo "[$(basename $BUILD_ROOT | sed -e 's/^builds_//')]"
+  fi
+}
+
 dotfiles_clean() {
   local st=$(git --git-dir="$DOTFILES_DIR/.git" \
                  --work-tree="$DOTFILES_DIR" status --porcelain)
@@ -306,7 +312,8 @@ function __prompt_command() {
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
   PS1+="$BYellow\w" # working dir
   PS1+="$BBlue$(_dotfiles_scm_info '(%s)')" # git/hg branch
-  PS1+="$BGreen$(_virtualenv)\n"
+  PS1+="$BGreen$(_virtualenv)"
+  PS1+="$BGreen$(_sandbox)\n"
   PS1+="$BWhite$" # prompt
   PS1+="$Color_Off "
   history -a
