@@ -16,6 +16,7 @@ alias hgwipe='hg revert --all && hg purge'
 alias ham='hg amend'
 
 alias vim="nvim -p"
+alias vimdiff="nvim -d"
 alias gdb_dump_stacks='gdb -ex "set pagination 0" -ex "thread apply all bt" --batch -p'
 
 alias ghc-sandbox="ghc -no-user-package-db -package-db .cabal-sandbox/*-packages.conf.d"
