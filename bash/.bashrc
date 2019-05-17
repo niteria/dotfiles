@@ -344,6 +344,9 @@ stty start ''
 stty -ixon
 stty -ixoff
 
+#### Make C-x C-x open the command in the editor
+bind -m emacs '"\C-x\C-x": edit-and-execute-command'
+
 export PATH=$PATH:$HOME/.scripts/:$HOME/.local/bin/
 
 ## machine specific stuff
