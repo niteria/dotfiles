@@ -326,3 +326,6 @@ let g:LanguageClient_serverCommands = {
     \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
     \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
     \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
