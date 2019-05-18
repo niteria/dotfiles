@@ -68,6 +68,15 @@ Plug 'tpope/vim-projectionist'
 " Display Github url of the current file with :GitHubURL
 Plug 'pgr0ss/vim-github-url'
 
+" Language Server Protocol Client
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+" Multi-entry selection UI.
+Plug 'junegunn/fzf'
+
 call plug#end()
 
 " use inkpot colorscheme
@@ -310,3 +319,10 @@ endfunction
 
 " Add :Q
 command Q :call TmuxCopyBuffersAndLeave()
+
+let g:LanguageClient_serverCommands = {
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
+    \ }
