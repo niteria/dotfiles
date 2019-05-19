@@ -329,3 +329,5 @@ let g:LanguageClient_serverCommands = {
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
+let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
