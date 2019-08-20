@@ -67,6 +67,8 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'tpope/vim-projectionist'
 " Display Github url of the current file with :GitHubURL
 Plug 'pgr0ss/vim-github-url'
+" Swift language syntax
+Plug 'zchee/vim-swift-syntax'
 
 " Language Server Protocol Client
 Plug 'autozimu/LanguageClient-neovim', {
