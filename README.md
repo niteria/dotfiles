@@ -18,6 +18,8 @@ brew install neovim/neovim/neovim
 pip2 install neovim
 pip3 install neovim
 sudo gem install neovim
+# for swift
+brew install swiftlint
 ```
 
 ### Ubuntu
@@ -41,6 +43,12 @@ sudo gem install neovim
 ```
 :PlugInstall
 ```
+
+### For Swift
+
+https://github.com/keith/sourcekittendaemon.vim#installation -
+Swift autocomplete
+
 
 ## Tmux
 

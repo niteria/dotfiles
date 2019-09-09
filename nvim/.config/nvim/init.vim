@@ -67,17 +67,26 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'tpope/vim-projectionist'
 " Display Github url of the current file with :GitHubURL
 Plug 'pgr0ss/vim-github-url'
-" Swift language syntax
-Plug 'zchee/vim-swift-syntax'
-
 " Language Server Protocol Client
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-
 " Multi-entry selection UI.
 Plug 'junegunn/fzf'
+" Supports syntax highlighting
+Plug 'vim-syntastic/syntastic'
+" Syntax highlighting for Swift
+Plug 'keith/swift.vim'
+" Code autocompletion for Swift
+Plug 'keith/sourcekittendaemon.vim'
+
+" Fancy Deep Learning code suggestions
+if has('win32') || has('win64')
+  Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
+else
+  Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+endif
 
 call plug#end()
 
@@ -333,3 +342,6 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
+
+let g:syntastic_swift_swiftlint_use_defaults = 1
+let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
