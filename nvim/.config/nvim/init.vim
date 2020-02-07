@@ -88,6 +88,9 @@ else
   Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 endif
 
+Plug 'niteria/neomake-platformio'
+Plug 'embear/vim-localvimrc'
+
 call plug#end()
 
 " use inkpot colorscheme
@@ -345,3 +348,5 @@ let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
 
 let g:syntastic_swift_swiftlint_use_defaults = 1
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0
