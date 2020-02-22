@@ -270,6 +270,7 @@ set cpt-=i
 
 " more comment prefixes for toggle_comment
 autocmd BufReadPost *.vim    let b:comment_prefix = "\" "
+autocmd BufReadPost *.ino    let b:comment_prefix = "// "
 
 " 7 lines of context when scrolling
 set scrolloff=7
