@@ -125,7 +125,7 @@ alias twgr='grep --exclude-dir="\.git" --exclude-dir="stage2" -R -i -I . -e '
 alias twgs='grep --exclude-dir="\.git" --exclude-dir="stage2" -R -I . -e '
 
 function set_window_title () {
-  if [ -z $TMUX ]; then
+  if [ -z $TMUX ] || ! [ -z $IN_NIX_SHELL ]; then
     echo -ne "\033]0;"$1"\007"
   else
     tmux set -q set-titles-string "$1"
@@ -295,6 +295,15 @@ function _virtualenv () {
   fi
 }
 
+function _nixshell () {
+  if test -z "$IN_NIX_SHELL" ; then
+    true
+  else
+    echo "[nix]"
+  fi
+}
+
+
 function __prompt_command() {
   local EXIT="$?"
 
@@ -310,6 +319,7 @@ function __prompt_command() {
   PS1+="$IBlack$(calc_elapsed) " # time
   PS1+="$IBlack$Time12h " # time
   PS1+="$BGreen[$BYellow\u$Red@$Green\h$BGreen]" # host
+  PS1+="$BGreen$(_nixshell)"
   PS1+="$BYellow\w" # working dir
   PS1+="$BBlue$(_dotfiles_scm_info '(%s)')" # git/hg branch
   PS1+="$BGreen$(_virtualenv)"
