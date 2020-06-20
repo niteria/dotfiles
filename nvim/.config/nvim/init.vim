@@ -80,6 +80,8 @@ Plug 'vim-syntastic/syntastic'
 Plug 'keith/swift.vim'
 " Code autocompletion for Swift
 Plug 'keith/sourcekittendaemon.vim'
+" Nix syntax highlighting
+Plug 'LnL7/vim-nix'
 
 " Fancy Deep Learning code suggestions
 if has('win32') || has('win64')
