@@ -29,6 +29,8 @@
 
           nativeBuildInputs = with pkgs; [ ];
 
+          x86-info-term = pkgs.callPackage ./tools/x86-info-term.nix { };
+
           buildInputs = with pkgs; [
             add-completions
             atop
@@ -54,6 +56,7 @@
             tmux
             unzip
             wget
+            x86-info-term
             yarn
           ];
 
