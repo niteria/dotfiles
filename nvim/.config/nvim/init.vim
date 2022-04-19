@@ -87,7 +87,7 @@ endif
 
 Plug 'niteria/neomake-platformio'
 Plug 'embear/vim-localvimrc'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovimhaskell/haskell-vim'
 Plug 'alx741/vim-hindent' 
 Plug 'vim-autoformat/vim-autoformat'
