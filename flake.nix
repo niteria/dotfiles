@@ -32,9 +32,13 @@
           buildInputs = with pkgs; [
             add-completions
             atop
+            btop
+            htop
+            glances
             difftastic
             fzf
             htop
+            lsd
             mcfly
             neovim
             nix-prefetch-github
