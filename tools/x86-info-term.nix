@@ -13,7 +13,7 @@ pkgs.stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     mkdir -p "$out"/bin;
-    echo "${pkgs.python3}/bin/python3" "${src}/x86_info_term.py" -p \$HOME/.cache/x86_info_term/ > "$out"/bin/$name
+    echo "${pkgs.python3}/bin/python3" "${src}/x86_info_term.py" -p \$HOME/.cache/x86_info_term/ \"\$@\"> "$out"/bin/$name
     chmod +x "$out"/bin/$name
   '';
 
