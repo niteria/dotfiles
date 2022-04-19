@@ -41,6 +41,7 @@
             nixfmt
             nodejs
             #            perf-linux
+            php
             pstree
             ripgrep
             stow
