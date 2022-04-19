@@ -5,6 +5,7 @@ stow -t ~ nvim
 stow -t ~ tmux
 stow -t ~ bash
 ln -sf $(pwd)/bash/bash_profile_$machine ~/.bash_profile_custom
+mkdir -p ~/.vimswp ~/.vimbackup
 ```
 
 # Setup
