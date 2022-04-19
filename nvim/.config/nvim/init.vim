@@ -67,11 +67,6 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'tpope/vim-projectionist'
 " Display Github url of the current file with :GitHubURL
 Plug 'pgr0ss/vim-github-url'
-" Language Server Protocol Client
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 " Multi-entry selection UI.
 Plug 'junegunn/fzf'
 " Supports syntax highlighting
@@ -95,6 +90,7 @@ Plug 'embear/vim-localvimrc'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'neovimhaskell/haskell-vim'
 Plug 'alx741/vim-hindent' 
+Plug 'vim-autoformat/vim-autoformat'
 call plug#end()
 
 " use inkpot colorscheme
@@ -221,9 +217,18 @@ autocmd FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
 
 " kill any trailing whitespace on save
-autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text,make
+autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,nix
   \ autocmd BufWritePre <buffer>
   \ :%s/\s\+$//e
+
+autocmd FileType nix autocmd BufWritePre *.nix :Autoformat
+autocmd FileType cpp autocmd BufWritePre <buffer> :Autoformat
+autocmd FileType bzl autocmd BufWritePre BUILD.bazel :Autoformat
+" We limit formatting to BUILD.bazel files because without specifying -type
+" buildifier won't sort dependencies.
+" If we wanted to extend this, we'd probably need a separate definition for
+" each bazel -type
+let g:formatdef_buildifier = '"buildifier -type build"'
 
 " Add the current file's directory to the path if not already present.
 " and all parent directories until you reach ~/
@@ -339,18 +344,6 @@ endfunction
 
 " Add :Q
 command Q :call TmuxCopyBuffersAndLeave()
-
-let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-    \ }
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-
-let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
 
 let g:syntastic_swift_swiftlint_use_defaults = 1
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']

@@ -1,9 +1,11 @@
 {
+  "coc.preferences.jumpCommand": "tabe",
   "languageserver": {
     "haskell": {
-      "command": "hie-wrapper",
+      "command": "haskell-language-server-wrapper",
       "args": ["--lsp"],
       "rootPatterns": [
+        "hie.yaml",
         "*.cabal",
         "stack.yaml",
         "cabal.project",
@@ -25,6 +27,11 @@
           "completionSnippetsOn": true
         }
       }
+    },
+    "clangd": {
+      "command": "clangd",
+      "rootPatterns": ["compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
   }
 }
