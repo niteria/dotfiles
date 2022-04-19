@@ -33,6 +33,7 @@
 
           buildInputs = with pkgs; [
             add-completions
+            arcanist
             atop
             btop
             htop
