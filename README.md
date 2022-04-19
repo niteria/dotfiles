@@ -4,6 +4,7 @@ cd dotfiles
 stow -t ~ nvim
 stow -t ~ tmux
 stow -t ~ bash
+ln -sf $(pwd)/bash/bash_profile_$machine ~/.bash_profile_custom
 ```
 
 # Setup
@@ -58,3 +59,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 In Tmux:
 `Ctrl-B I` to install plugins.
+
+## Nix
+
+nix develop ~/dotfiles

@@ -1,0 +1,8 @@
+export PATH="$PATH:/home/niteria/arcanist/bin/"
+alias t="nix develop ~/dotfiles"
+alias uv="cd ~/uv/straylight"
+alias uv2="cd ~/uv2/straylight"
+alias nd="nix develop"
+alias rcc="bazel run //cpp:refresh_compile_commands"
+alias ac=". add-completions"
+tmux-a-or-new
