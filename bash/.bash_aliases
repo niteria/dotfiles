@@ -55,3 +55,7 @@ alias shift_path='export PATH=$(echo $PATH | sed "s/^.[^:]*://")'
 function add_path() {
   export PATH="$1:$PATH"
 }
+
+function vimf() {
+  vim $(fzf -m -q "$*");
+}
