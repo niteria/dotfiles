@@ -17,8 +17,7 @@
         "haskell"
       ],
       "initializationOptions": {
-        "languageServerHaskell": {
-        }
+        "languageServerHaskell": {}
       },
       "settings": {
         "languageServerHaskell": {
@@ -32,6 +31,12 @@
       "command": "clangd",
       "rootPatterns": ["compile_commands.json"],
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+    },
+    "nix": {
+      "command": "rnix-lsp",
+      "filetypes": [
+        "nix"
+      ]
     }
   }
 }

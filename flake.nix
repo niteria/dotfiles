@@ -38,6 +38,7 @@
             difftastic
             fzf
             htop
+            nodePackages.js-beautify
             lsd
             mcfly
             neovim
@@ -48,6 +49,7 @@
             php
             pstree
             ripgrep
+            rnix-lsp
             stow
             tmux
             unzip

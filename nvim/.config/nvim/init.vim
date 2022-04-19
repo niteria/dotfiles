@@ -222,6 +222,7 @@ autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,
   \ :%s/\s\+$//e
 
 autocmd FileType nix autocmd BufWritePre *.nix :Autoformat
+autocmd FileType json autocmd BufWritePre * :Autoformat
 autocmd FileType cpp autocmd BufWritePre <buffer> :Autoformat
 autocmd FileType bzl autocmd BufWritePre BUILD.bazel :Autoformat
 " We limit formatting to BUILD.bazel files because without specifying -type
