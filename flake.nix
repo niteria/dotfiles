@@ -40,8 +40,10 @@
             glances
             difftastic
             fzf
+            gitui
             htop
             nodePackages.js-beautify
+            lazygit
             lsd
             mcfly
             neovim
