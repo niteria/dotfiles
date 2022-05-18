@@ -35,10 +35,12 @@
             add-completions
             arcanist
             atop
+            bintools
             btop
             htop
             glances
             difftastic
+            ethtool
             fzf
             gitui
             htop
