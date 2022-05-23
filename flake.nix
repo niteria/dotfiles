@@ -55,6 +55,7 @@
             #            perf-linux
             php
             pstree
+            pciutils
             ripgrep
             rnix-lsp
             stow
