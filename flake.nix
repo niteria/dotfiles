@@ -41,8 +41,10 @@
             glances
             difftastic
             ethtool
+            fastmod
             fzf
             gitui
+            hexyl
             htop
             nodePackages.js-beautify
             lazygit
@@ -59,11 +61,13 @@
             ripgrep
             rnix-lsp
             stow
+            sysz
             tmux
             unzip
             wget
             x86-info-term
             yarn
+            zoxide
           ];
 
           preBuild = "";
@@ -75,7 +79,7 @@
           shellHook = ''
             . "${pkgs.bash-completion}/etc/profile.d/bash_completion.sh"
             . "${pkgs.git}/share/bash-completion/completions/git"
-            eval "$(mcfly init bash)"
+            eval "$(zoxide init bash)"
           '';
         };
 
