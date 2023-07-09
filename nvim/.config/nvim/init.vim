@@ -91,70 +91,68 @@ Plug('neoclide/coc.nvim', { branch =  'release' })
 Plug 'neovimhaskell/haskell-vim'
 Plug 'vim-autoformat/vim-autoformat'
 vim.fn['plug#end']()
+
+-- use inkpot colorscheme
+vim.cmd('colorscheme inkpot')
+
+-- leader and localleader
+vim.g.mapleader = ","
+vim.g.maplocalleader = "\\"
+
+-- move between tabs with Tab and Shift-Tab
+vim.keymap.set('n', '<Tab>', function() vim.cmd('tabnext') end)
+vim.keymap.set('n', '<S-Tab>', function() vim.cmd('tabprev') end)
+
+-- backup edited files
+vim.opt.backup = true
+vim.opt.backupdir = {vim.fn.expand('~/.vimbackup//')}
+
+-- persist undo
+if vim.fn.has('persistent_undo') == 1 then
+  vim.opt.undodir = {vim.fn.expand('~/local/.undodir/')}
+  vim.opt.undofile = true
+end
+
+-- map undotree to U
+vim.keymap.set('n', 'U', function() vim.cmd('UndotreeToggle') end)
+
+-- This unsets the "last search pattern" register by hitting return
+vim.keymap.set('n', '<CR>', function() vim.cmd('noh') end, { silent = true })
+
+-- show line numbers
+vim.opt.number = true
+
+-- behaviour of tab
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.expandtab = true
+
+-- arrows move between "terminal lines" not "vim lines"
+vim.keymap.set('', '<Up>', 'gk', { noremap = false } )
+vim.keymap.set('', '<Down>', 'gj', { noremap = false })
+
+-- set up keybindings for command-t
+vim.keymap.set('n', '<localleader>t', function() vim.cmd('CommandT') end, { silent = true })
+vim.keymap.set('n', '<localleader>b', function() vim.cmd('CommandTBuffer') end, { silent = true })
+vim.keymap.set('n', '<localleader>j', function() vim.cmd('CommandTJump') end, { silent = true })
+-- use watchman, falling back to find in CommandT
+vim.g.CommandTFileScanner = 'watchman'
+-- make CommandT open in a new tab
+vim.g.CommandTAcceptSelectionTabMap = '<CR>'
+-- I might not need this
+vim.g.CommandTAcceptSelectionSplitMap = ''
+vim.g.CommandTAcceptSelectionVSplitMap = ''
+vim.g.CommandTAcceptSelectionMap = ''
+vim.g.CommandTAcceptSelectionCommand = 'tabe'
+vim.g.CommandTAcceptSelectionTabCommand = 'tabe'
+vim.g.CommandTAcceptSelectionSplitCommand = 'tabe'
+vim.g.CommandTAcceptSelectionVSplitCommand = 'tabe'
+-- to make CommandT work better
+vim.opt.switchbuf = 'usetab'
+
+-- Don't use Ex mode, use Q for formatting
+vim.keymap.set('', 'Q', 'gq', { noremap = false })
 EOF
-
-
-" use inkpot colorscheme
-colorscheme inkpot
-
-" leader and localleader
-let mapleader = ","
-let maplocalleader = "\\"
-
-" move between tabs with Tab and Shift-Tab
-nmap <Tab> :tabnext<enter>
-nmap <S-Tab> :tabprev<enter>
-
-" backup edited files
-set backup
-set backupdir=~/.vimbackup//
-
-" persist undo
-if has("persistent_undo")
-  set undodir=~/local/.undodir/
-  set undofile
-endif
-
-" map undotree to U
-nnoremap U :UndotreeToggle<cr>
-
-" This unsets the "last search pattern" register by hitting return
-nnoremap <silent><CR> :noh<CR>
-
-" show line numbers
-set number
-
-" behaviour of tab
-set shiftwidth=2
-set tabstop=2
-set expandtab
-
-" arrows move between "terminal lines" not "vim lines"
-map <Up> gk
-map <Down> gj
-
-" set up keybindings for command-t
-nnoremap <silent> <localleader>t :CommandT<cr>
-nnoremap <silent> <localleader>b :CommandTBuffer<cr>
-nnoremap <silent> <localleader>j :CommandTJump<cr>
-" use watchman, falling back to find in CommandT
-let g:CommandTFileScanner = 'watchman'
-" make CommandT open in a new tab
-let g:CommandTAcceptSelectionTabMap = '<CR>'
-" --- I might not need this
-let g:CommandTAcceptSelectionSplitMap = ''
-let g:CommandTAcceptSelectionVSplitMap = ''
-let g:CommandTAcceptSelectionMap = ''
-let g:CommandTAcceptSelectionCommand = 'tabe'
-let g:CommandTAcceptSelectionTabCommand = 'tabe'
-let g:CommandTAcceptSelectionSplitCommand = 'tabe'
-let g:CommandTAcceptSelectionVSplitCommand = 'tabe'
-" --- endof
-" to make CommandT work better
-set switchbuf=usetab
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
