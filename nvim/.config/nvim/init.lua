@@ -1,4 +1,3 @@
-lua << EOF
 -- probably unnecessary, but just in case
 vim.opt.compatible = false
 
@@ -524,5 +523,3 @@ keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
 -- Snippet next
 vim.g.coc_snippet_next = '<tab>'
 vim.g.CommandTPreferredImplementation = 'lua'
-EOF
-
