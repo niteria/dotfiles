@@ -152,80 +152,115 @@ vim.opt.switchbuf = 'usetab'
 
 -- Don't use Ex mode, use Q for formatting
 vim.keymap.set('', 'Q', 'gq', { noremap = false })
+
+-- Only do this part when compiled with support for autocommands.
+if vim.fn.has("autocmd") == 1 then
+  -- Put these in an autocmd group, so that we can delete them easily.
+  local vimrcExGroup = vim.api.nvim_create_augroup('vimrcEx', { clear = true })
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'text',
+    group = vimrcExGroup,
+    command = 'setlocal textwidth=78',
+  })
+
+  --  When editing a file, always jump to the last known cursor position.
+  --  Don't do it when the position is invalid or when inside an event handler
+  --  (happens when dropping a file on gvim).
+  vim.api.nvim_create_autocmd('BufReadPost', {
+    pattern = '*',
+    group = vimrcExGroup,
+    callback = function()
+      local rememberedLine = vim.fn.line("'\"")
+      local lastLine = vim.fn.line("$")
+      if rememberedLine > 0 and rememberedLine <= lastLine then
+        vim.cmd('normal! g`\"')
+      end
+    end,
+  })
+
+end
+
+vim.cmd('syntax on')
+
+-- allows cursor to be positioned "outside text" in visual mode
+vim.opt.virtualedit = 'block'
+
+-- how to display whitespace
+vim.opt.listchars = { tab = '>-', trail = '·', eol = '$' }
+vim.opt.foldmethod = 'syntax'
+vim.opt.foldlevel = 10000
+
+-- Don't remove indent even if I don't write anything on that line
+vim.keymap.set('i', '<CR>', '<CR> <BS>')
+
+-- directory for the swap file
+vim.opt.directory = {
+  vim.fn.expand('~/.vimswp//'),
+  '.',
+  vim.fn.expand('~/tmp'),
+  '/var/tmp',
+  '/tmp'
+}
+
+-- manually set filetypes
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = 'TARGETS',
+  command = 'setlocal filetype=python',
+})
+
+-- .prof files read better with nowrap
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = '*.prof',
+  command = 'setlocal nowrap',
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.opt.tabstop = 2
+    vim.opt.shiftwidth = 2
+    vim.opt.expandtab = true
+    vim.opt.autoindent = true
+    vim.opt.softtabstop = 2
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'make',
+  callback = function()
+    vim.opt.expandtab = false
+    vim.opt.tabstop = 8
+    vim.opt.shiftwidth = 8
+  end,
+})
+
+-- set filetypes as typescript.tsx
+vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
+  pattern = '*.tsx,*.jsx',
+  command = 'set filetype=typescript.tsx',
+})
+
+-- kill any trailing whitespace on save
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,nix',
+  callback = function()
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = 0,
+      command = ':%s/\\s\\+$//e',
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'nix,json,cpp,bzl,haskell,python',
+  callback = function()
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = 0,
+      command = ':Autoformat',
+    })
+  end,
+})
 EOF
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-    au!
-
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
-
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    autocmd BufReadPost *
-          \ if line("'\"") > 0 && line("'\"") <= line("$") |
-          \   exe "normal! g`\"" |
-          \ endif
-
-  augroup END
-
-endif
-
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-
-" allows cursor to be positioned "outside text" in visual mode
-set virtualedit=block
-
-" how to display whitespace
-set listchars=tab:>-,trail:·,eol:$
-set foldmethod=syntax
-set foldlevel=10000
-
-" Don't remove indent even if I don't write anything on that line
-imap <CR> <CR> <BS>
-
-" directory for the swap file
-set directory=~/.vimswp//,.,~/tmp,/var/tmp,/tmp
-
-" manually set filetypes
-autocmd BufRead TARGETS setlocal filetype=python
-
-" .prof files read better with nowrap
-autocmd BufRead *.prof setlocal nowrap
-
-autocmd FileType python set ts=2 | set shiftwidth=2 | set expandtab |
-  \ set autoindent | set softtabstop=2
-
-autocmd FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
-
-" set filetypes as typescript.tsx
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-
-" kill any trailing whitespace on save
-autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,nix
-  \ autocmd BufWritePre <buffer>
-  \ :%s/\s\+$//e
-
-autocmd FileType nix autocmd BufWritePre *.nix :Autoformat
-autocmd FileType json autocmd BufWritePre * :Autoformat
-autocmd FileType cpp autocmd BufWritePre <buffer> :Autoformat
-autocmd FileType bzl autocmd BufWritePre BUILD.bazel :Autoformat
-autocmd Filetype haskell autocmd BufWritePre *.hs :Autoformat
-autocmd Filetype python autocmd BufWritePre *.py :Autoformat
 
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
