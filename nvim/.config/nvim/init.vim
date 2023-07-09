@@ -242,7 +242,7 @@ vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
 
 -- kill any trailing whitespace on save
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,nix',
+  pattern = 'c,cabal,cpp,haskell,javascript,php,python,readme,text,make,bzl,nix,vim',
   callback = function()
     vim.api.nvim_create_autocmd('BufWritePre', {
       buffer = 0,
@@ -260,82 +260,97 @@ vim.api.nvim_create_autocmd('FileType', {
     })
   end,
 })
+
+vim.g.autoformat_autoindent = 0
+vim.g.autoformat_retab = 0
+-- https://github.com/vim-autoformat/vim-autoformat#help-the-formatter-doesnt-work-as-expected
+vim.g.formatdef_fourmolu = '"exec 2> /dev/null; fourmolu --no-cabal"'
+vim.g.formatdef_stylish_haskell = '"stylish-haskell"'
+vim.g.formatters_haskell = {'fourmolu', 'stylish_haskell'}
+vim.g.run_all_formatters_haskell = 1
+
+-- We limit formatting to BUILD.bazel files because without specifying -type
+-- buildifier won't sort dependencies.
+-- If we wanted to extend this, we'd probably need a separate definition for
+-- each bazel -type
+vim.g.formatdef_buildifier = '"buildifier -type build"'
+
+-- Add the current file's directory to the path if not already present.
+-- and all parent directories until you reach ~/
+-- This is useful with gf
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = '*',
+  callback = function()
+    local tempPath = vim.fn.escape(vim.fn.escape(vim.fn.expand("%:p:h"), ' '), '\\ ')
+    vim.opt.path:append(tempPath)
+    vim.opt.path:append(vim.fn.expand("~/"))
+  end,
+})
+vim.opt.path:append("**")
+
+-- better menus?
+vim.opt.wildmenu = true
+
+-- Open gf in new tab
+vim.keymap.set('n', 'gF', 'gf', { remap = false })
+vim.keymap.set('n', 'gf', '<C-w>gf', { remap = false })
+
+-- highlight the 81st column of wide lines...
+vim.opt.colorcolumn = '81'
+
+-- increase open tab limit
+vim.opt.tabpagemax = 200
+
+-- make ctrl-a go to begining of the line in command mode
+vim.keymap.set('c', '<C-A>', '<Home>', { remap = false })
+
+
+-- edit-reload vimrc
+vim.keymap.set('n', '<leader>ev', ':tabedit $MYVIMRC<cr>', { remap = false })
+vim.keymap.set('n', '<leader>sv', ':source $MYVIMRC<cr>', { remap = false })
+
+-- exit insert mode with jk
+vim.keymap.set({'i', 'n'}, 'jk', '<esc>', { remap = false })
+
+-- always have a status line
+vim.opt.laststatus = 2
+
+vim.g.haskell_conceal              = 0
+vim.g.haskell_multiline_strings    = 1
+vim.g.haskell_conceal_enumerations = 0
+vim.g.haskell_haddock              = 1
+
+-- no mouse integration from terminus
+vim.g.TerminusMouse = 0
+
+-- disable slow completion:
+--   i - included files
+--   t - tags
+vim.opt.cpt:remove({'t', 'i'})
+
+-- more comment prefixes for toggle_comment
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*.vim',
+  callback = function()
+    vim.b.comment_prefix = '" '
+  end,
+})
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*.ino',
+  callback = function()
+    vim.b.comment_prefix = '// '
+  end,
+})
+
+-- 7 lines of context when scrolling
+vim.opt.scrolloff = 7
+
+-- Turn on deoplete
+-- vim.g['deoplete#enable_at_startup'] = 1
+
+-- Increase memory limit for patterns from 1mb to 10mb
+vim.opt.maxmempattern = 10000
 EOF
-
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-" https://github.com/vim-autoformat/vim-autoformat#help-the-formatter-doesnt-work-as-expected
-let g:formatdef_fourmolu = '"exec 2> /dev/null; fourmolu --no-cabal"'
-let g:formatdef_stylish_haskell = '"stylish-haskell"'
-let g:formatters_haskell = ['fourmolu', 'stylish_haskell']
-let g:run_all_formatters_haskell = 1
-
-" We limit formatting to BUILD.bazel files because without specifying -type
-" buildifier won't sort dependencies.
-" If we wanted to extend this, we'd probably need a separate definition for
-" each bazel -type
-let g:formatdef_buildifier = '"buildifier -type build"'
-
-" Add the current file's directory to the path if not already present.
-" and all parent directories until you reach ~/
-" This is useful with gf
-autocmd BufRead *
-  \ let s:tempPath=escape(escape(expand("%:p:h"), ' '), '\ ') |
-  \ exec "set path+=".s:tempPath.";~/"
-set path+=**
-
-" better menus?
-set wildmenu
-
-" Open gf in new tab
-nnoremap gF gf
-nnoremap gf <C-w>gf
-
-" highlight the 81st column of wide lines...
-set colorcolumn=81
-
-" increase open tab limit
-set tabpagemax=200
-
-" make ctrl-a go to begining of the line in command mode
-cnoremap <C-A> <Home>
-
-" edit-reload vimrc
-nnoremap <leader>ev :tabedit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" exit insert mode with jk
-inoremap jk <esc>
-
-" always have a status line
-set laststatus=2
-
-let g:haskell_conceal              = 0
-let g:haskell_multiline_strings    = 1
-let g:haskell_conceal_enumerations = 0
-let g:haskell_haddock              = 1
-
-" no mouse integration from terminus
-let g:TerminusMouse=0
-
-" disable slow completion:
-"   i - included files
-"   t - tags
-set cpt-=t
-set cpt-=i
-
-" more comment prefixes for toggle_comment
-autocmd BufReadPost *.vim    let b:comment_prefix = "\" "
-autocmd BufReadPost *.ino    let b:comment_prefix = "// "
-
-" 7 lines of context when scrolling
-set scrolloff=7
-
-" Turn on deoplete
-"let g:deoplete#enable_at_startup = 1
-
-" Increase memory limit for patterns from 1mb to 10mb
-set maxmempattern=10000
 
 " Do :Ack with a word under cursor with K
 nmap K <Plug>(FerretAckWord)
