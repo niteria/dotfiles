@@ -37,6 +37,11 @@
       "filetypes": [
         "nix"
       ]
+    },
+    "lua": {
+      "command": "lua-language-server",
+      "rootPatterns": [".git"],
+      "filetypes": ["lua"]
     }
   }
 }

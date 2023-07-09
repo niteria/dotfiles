@@ -89,6 +89,8 @@ Plug("embear/vim-localvimrc")
 Plug("neoclide/coc.nvim", { branch = "release" })
 Plug("neovimhaskell/haskell-vim")
 Plug("vim-autoformat/vim-autoformat")
+-- vim lua autocompletion
+Plug 'rafcamlet/coc-nvim-lua'
 vim.fn["plug#end"]()
 
 -- use inkpot colorscheme
@@ -350,6 +352,13 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "*.ino",
   callback = function()
     vim.b.comment_prefix = "// "
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*.lua",
+  callback = function()
+    vim.b.comment_prefix = "-- "
   end,
 })
 

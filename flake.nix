@@ -49,6 +49,8 @@
             nodePackages.js-beautify
             lazygit
             lsd
+            # will be renamed to lua-language-server
+            sumneko-lua-language-server
             mcfly
             neovim
             nix-prefetch-github
