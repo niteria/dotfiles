@@ -350,80 +350,84 @@ vim.opt.scrolloff = 7
 
 -- Increase memory limit for patterns from 1mb to 10mb
 vim.opt.maxmempattern = 10000
+
+
+-- Do :Ack with a word under cursor with K
+vim.keymap.set('n', 'K', '<Plug>(FerretAckWord)')
+--  Do :Ack with a selected text
+--    Unfortunately broken, doesn't handle spaces
+--  vmap K "xy:let @x = substitute(@x, ' ', '\\ ', 'g')<CR>:Ack --literal <C-R>x<CR>
+
+-- Don't open a QuickFix window after ,<tab>
+vim.g.qfenter_enable_autoquickfix = 0
+
+-- switching back and forth between .cpp and .h files
+vim.keymap.set('n', ',s', ':A<CR>')
+
+-- TODO: do it per filetype like
+-- https://www.reddit.com/r/vim/comments/76qzoc/advanced_projectionist_templates/doiaxjd
+vim.g.projectionist_heuristics = {
+   ["*"] = {
+      ["*.c"] = {
+         alternate = "{}.h"
+      },
+      ["*.cc"] = {
+         alternate = "{}.h"
+      },
+      ["*.cpp"] = {
+         alternate = "{}.h"
+      },
+      ["*.h"] = {
+         alternate = { "{}.cpp", "{}.cc", "{}.c" }
+      }
+   }
+}
+
+
+-- Take the list of visible buffers and put them in the tmux buffer (clipboard)
+local tmuxCopyBuffers = function()
+  local files = vim.api.nvim_exec("ls a", true)
+  -- Regex to strip out everything from :ls but the buffer filenames
+  files = vim.fn.substitute(files, '^[^"]*"', '', 'g')
+  files = vim.fn.substitute(files, '"[^"]*\n[^"]*"', '\n', 'g')
+  files = vim.fn.substitute(files, '"[^"]*$','','g')
+  -- make space separated
+  files = vim.fn.substitute(files, '\n',' ','g')
+  print(files)
+  os.execute("tmux-load-buffer " .. vim.fn.shellescape(files))
+end
+
+vim.api.nvim_create_user_command('TmuxCopyBuffers', tmuxCopyBuffers, { force = true })
+
+-- Do TmuxCopyBuffers on exit (disabled)
+-- au VimLeave * call TmuxCopyBuffers()
+
+-- Add :Q
+vim.api.nvim_create_user_command('Q', function()
+  tmuxCopyBuffers()
+  vim.cmd('quitall')
+end, { force = true })
+
+vim.g.syntastic_swift_swiftlint_use_defaults = 1
+vim.g.syntastic_swift_checkers = {'swiftlint', 'swiftpm'}
+vim.g.localvimrc_sandbox = 0
+vim.g.localvimrc_ask = 0
+
+-- Give more space for displaying messages.
+vim.opt.cmdheight = 2
+
+-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+-- delays and poor user experience.
+vim.opt.updatetime = 300
+
+-- Don't pass messages to |ins-completion-menu|.
+vim.opt.shortmess:append('c')
+
+-- Always show the signcolumn, otherwise it would shift the text each time
+-- diagnostics appear/become resolved.
+vim.opt.signcolumn = 'yes'
+
 EOF
-
-" Do :Ack with a word under cursor with K
-nmap K <Plug>(FerretAckWord)
-" Do :Ack with a selected text
-"   Unfortunately broken, doesn't handle spaces
-" vmap K "xy:let @x = substitute(@x, ' ', '\\ ', 'g')<CR>:Ack --literal <C-R>x<CR>
-
-" Don't open a QuickFix window after ,<tab>
-let g:qfenter_enable_autoquickfix = 0
-
-" switching back and forth between .cpp and .h files
-nmap ,s :A<CR>
-" TODO: do it per filetype like
-" https://www.reddit.com/r/vim/comments/76qzoc/advanced_projectionist_templates/doiaxjd
-let g:projectionist_heuristics = {
-      \ '*': {
-      \   '*.h': {
-      \     'alternate': [ '{}.cpp', '{}.cc', '{}.c' ]
-      \   },
-      \   '*.cpp': {
-      \     'alternate': '{}.h'
-      \   },
-      \   '*.c': {
-      \     'alternate': '{}.h'
-      \   },
-      \   '*.cc': {
-      \     'alternate': '{}.h'
-      \   }
-      \ }}
-
-" Take the list of visible buffers and put them in the tmux buffer (clipboard)
-function! TmuxCopyBuffers()
-    redir => files
-    :ls a
-    redir END
-    " Regex to strip out everything from :ls but the buffer filenames
-    let files = substitute(files, '^[^"]*"', '', 'g')
-    let files = substitute(files, '"[^"]*\n[^"]*"', '\n', 'g')
-    let files = substitute(files, '"[^"]*$','','g')
-    " make space separated
-    let files = substitute(files, '\n',' ','g')
-    exe '!tmux-load-buffer ' . shellescape(&t_te . files)
-endfunction
-
-function! TmuxCopyBuffersAndLeave()
-    call TmuxCopyBuffers()
-    quitall
-endfunction
-
-" Do TmuxCopyBuffers on exit (disabled)
-"au VimLeave * call TmuxCopyBuffers()
-
-" Add :Q
-command Q :call TmuxCopyBuffersAndLeave()
-
-let g:syntastic_swift_swiftlint_use_defaults = 1
-let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
-let g:localvimrc_sandbox = 0
-let g:localvimrc_ask = 0
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
