@@ -1,95 +1,98 @@
-" just in case
-set nocompatible
+lua << EOF
+-- probably unnecessary, but just in case
+vim.opt.compatible = false
 
-" Set up with:
-" $ pyenv virtualenv --venv-base-dir $HOME/local/virtualenvs/ neovim3
-" $ source $HOME/local/virtualenvs/neovim3/bin/activate
-" $ pip3 install neovim
-let python3_path = expand('$HOME/local/virtualenvs/neovim3/bin/python')
-if filereadable(python3_path)
-  let g:python3_host_prog = expand(python3_path)
-endif
-let python2_path = expand('$HOME/local/virtualenvs/neovim2/bin/python')
-if filereadable(python2_path)
-  let g:python_host_prog = expand(python2_path)
-endif
-" to get ruby working you need neovim-ruby-host somehow on path
-" it gets installed with "gem install neovim"
-" Here's how to disable it
-" let g:loaded_ruby_provider = 1
+--  Set up with:
+--  $ pyenv virtualenv --venv-base-dir $HOME/local/virtualenvs/ neovim3
+--  $ source $HOME/local/virtualenvs/neovim3/bin/activate
+--  $ pip3 install neovim
+local python3_path = vim.fn.expand("$HOME/local/virtualenvs/neovim3/bin/python")
+if vim.fn.filereadable(python3_path) == 1 then
+  vim.g.python3_host_prog = vim.fn.expand(python3_path)
+end
 
-" do :PlugInstall to install the plugins
-call plug#begin('~/.config/nvim/plugged')
-" inkpot colorscheme
+local python2_path = vim.fn.expand("$HOME/local/virtualenvs/neovim2/bin/python")
+if vim.fn.filereadable(python2_path) == 1 then
+  vim.g.python2_host_prog = vim.fn.expand(python2_path)
+end
+
+local Plug = vim.fn['plug#']
+
+vim.fn['plug#begin']('~/.config/nvim/plugged')
+-- do :PlugInstall to install the plugins
+-- inkpot colorscheme
 Plug 'ciaranm/inkpot'
-" sensible defaults
+-- sensible defaults
 Plug 'tpope/vim-sensible'
-" complete command-line (: / etc.) from the current file
+-- complete command-line (: / etc.) from the current file
 Plug 'vim-scripts/CmdlineComplete'
-" Fast file navigation for VIM
-Plug 'wincent/command-t', {
-  \   'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'
-  \ }
-" :Ack command
+-- Fast file navigation for VIM
+Plug('wincent/command-t', {
+  ['do'] = 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'
+})
+-- :Ack command
 Plug 'wincent/ferret'
-" Bracketed paste
+-- Bracketed paste
 Plug 'wincent/terminus'
-" Awesome git integration, :GDiff, :GBlame, etc...
+-- Awesome git integration, :GDiff, :GBlame, etc...
 Plug 'tpope/vim-fugitive'
-" File browser
+-- File browser
 Plug 'justinmk/vim-dirvish'
-" Show git status in the file browser
+-- Show git status in the file browser
 Plug 'kristijanhusak/vim-dirvish-git'
-" Mercurial integration
+-- Mercurial integration
 Plug 'ludovicchabant/vim-lawrencium'
-" - goes up a directory
+-- - goes up a directory
 Plug 'tpope/vim-vinegar'
-" Haskell enhancements
+-- Haskell enhancements
 Plug 'parsonsmatt/vim2hs'
-" Undo tree
+-- Undo tree
 Plug 'mbbill/undotree'
-" Coerce: crm - CoeRce Mixed-case, crs - CoeRce Snake-case
+-- Coerce: crm - CoeRce Mixed-case, crs - CoeRce Snake-case
 Plug 'tpope/tpope-vim-abolish'
-" Autocompletion framework
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Autocompletion from tmux buffers, integrates with deoplete
+-- Autocompletion framework
+Plug('Shougo/deoplete.nvim', {
+  ['do'] = ':UpdateRemotePlugins'
+})
+-- Autocompletion from tmux buffers, integrates with deoplete
 Plug 'wellle/tmux-complete.vim'
-" [- : Move to previous line of lesser indent than the current line.
+-- [- : Move to previous line of lesser indent than the current line.
 Plug 'jeetsukumaran/vim-indentwise'
-" Make QuickFix window do what I want
+-- Make QuickFix window do what I want
 Plug 'yssl/QFEnter'
-" Ghcid - a tiny Haskell IDE
-Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
-" Typescript support
+-- Ghcid - a tiny Haskell IDE
+Plug('ndmitchell/ghcid', { rtp = 'plugins/nvim' })
+-- Typescript support
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
-" Projectionist for .c .cpp .cc <-> .h file switching
+-- Projectionist for .c .cpp .cc <-> .h file switching
 Plug 'tpope/vim-projectionist'
-" Display Github url of the current file with :GitHubURL
+-- Display Github url of the current file with :GitHubURL
 Plug 'pgr0ss/vim-github-url'
-" Multi-entry selection UI.
+-- Multi-entry selection UI.
 Plug 'junegunn/fzf'
-" Supports syntax highlighting
+-- Supports syntax highlighting
 Plug 'vim-syntastic/syntastic'
-" Syntax highlighting for Swift
+-- Syntax highlighting for Swift
 Plug 'keith/swift.vim'
-" Code autocompletion for Swift
+-- Code autocompletion for Swift
 Plug 'keith/sourcekittendaemon.vim'
-" Nix syntax highlighting
+-- Nix syntax highlighting
 Plug 'LnL7/vim-nix'
-" Fancy Deep Learning code suggestions
-if has('win32') || has('win64')
-  Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
+-- Fancy Deep Learning code suggestions
+if vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1 then
+  Plug('tbodt/deoplete-tabnine', { ['do']  = 'powershell.exe .\\install.ps1' })
 else
-  Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-endif
-
+  Plug('tbodt/deoplete-tabnine', { ['do']  = './install.sh' })
+end
 Plug 'niteria/neomake-platformio'
 Plug 'embear/vim-localvimrc'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug('neoclide/coc.nvim', { branch =  'release' })
 Plug 'neovimhaskell/haskell-vim'
 Plug 'vim-autoformat/vim-autoformat'
-call plug#end()
+vim.fn['plug#end']()
+EOF
+
 
 " use inkpot colorscheme
 colorscheme inkpot
