@@ -61,6 +61,7 @@
             ripgrep
             rnix-lsp
             stow
+            stylua
             sysz
             tmux
             unzip
