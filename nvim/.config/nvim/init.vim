@@ -36,7 +36,7 @@ Plug 'wincent/ferret'
 Plug 'wincent/terminus'
 " Awesome git integration, :GDiff, :GBlame, etc...
 Plug 'tpope/vim-fugitive'
-" File browser 
+" File browser
 Plug 'justinmk/vim-dirvish'
 " Show git status in the file browser
 Plug 'kristijanhusak/vim-dirvish-git'
@@ -77,7 +77,6 @@ Plug 'keith/swift.vim'
 Plug 'keith/sourcekittendaemon.vim'
 " Nix syntax highlighting
 Plug 'LnL7/vim-nix'
-
 " Fancy Deep Learning code suggestions
 if has('win32') || has('win64')
   Plug 'tbodt/deoplete-tabnine', { 'do': 'powershell.exe .\install.ps1' }
@@ -89,7 +88,6 @@ Plug 'niteria/neomake-platformio'
 Plug 'embear/vim-localvimrc'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovimhaskell/haskell-vim'
-Plug 'alx741/vim-hindent' 
 Plug 'vim-autoformat/vim-autoformat'
 call plug#end()
 
@@ -110,8 +108,8 @@ set backupdir=~/.vimbackup//
 
 " persist undo
 if has("persistent_undo")
-    set undodir=~/local/.undodir/
-    set undofile
+  set undodir=~/local/.undodir/
+  set undofile
 endif
 
 " map undotree to U
@@ -166,18 +164,18 @@ if has("autocmd")
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
-  au!
+    au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+    " For all text files set 'textwidth' to 78 characters.
+    autocmd FileType text setlocal textwidth=78
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal! g`\"" |
+          \ endif
 
   augroup END
 
@@ -191,7 +189,7 @@ filetype indent on
 " allows cursor to be positioned "outside text" in visual mode
 set virtualedit=block
 
-" how to display whitespace 
+" how to display whitespace
 set listchars=tab:>-,trail:·,eol:$
 set foldmethod=syntax
 set foldlevel=10000
@@ -208,8 +206,8 @@ autocmd BufRead TARGETS setlocal filetype=python
 " .prof files read better with nowrap
 autocmd BufRead *.prof setlocal nowrap
 
-autocmd FileType python set ts=4 | set shiftwidth=4 | set expandtab |
-  \ set autoindent | set softtabstop=4
+autocmd FileType python set ts=2 | set shiftwidth=2 | set expandtab |
+  \ set autoindent | set softtabstop=2
 
 autocmd FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 
@@ -225,6 +223,17 @@ autocmd FileType nix autocmd BufWritePre *.nix :Autoformat
 autocmd FileType json autocmd BufWritePre * :Autoformat
 autocmd FileType cpp autocmd BufWritePre <buffer> :Autoformat
 autocmd FileType bzl autocmd BufWritePre BUILD.bazel :Autoformat
+autocmd Filetype haskell autocmd BufWritePre *.hs :Autoformat
+autocmd Filetype python autocmd BufWritePre *.py :Autoformat
+
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+" https://github.com/vim-autoformat/vim-autoformat#help-the-formatter-doesnt-work-as-expected
+let g:formatdef_fourmolu = '"exec 2> /dev/null; fourmolu --no-cabal"'
+let g:formatdef_stylish_haskell = '"stylish-haskell"'
+let g:formatters_haskell = ['fourmolu', 'stylish_haskell']
+let g:run_all_formatters_haskell = 1
+
 " We limit formatting to BUILD.bazel files because without specifying -type
 " buildifier won't sort dependencies.
 " If we wanted to extend this, we'd probably need a separate definition for
@@ -303,12 +312,12 @@ let g:qfenter_enable_autoquickfix = 0
 
 " switching back and forth between .cpp and .h files
 nmap ,s :A<CR>
-" TODO: do it per filetype like 
+" TODO: do it per filetype like
 " https://www.reddit.com/r/vim/comments/76qzoc/advanced_projectionist_templates/doiaxjd
 let g:projectionist_heuristics = {
       \ '*': {
       \   '*.h': {
-      \     'alternate': [ '{}.cpp', '{}.cc', '{}.c' ] 
+      \     'alternate': [ '{}.cpp', '{}.cc', '{}.c' ]
       \   },
       \   '*.cpp': {
       \     'alternate': '{}.h'
@@ -365,16 +374,18 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+" other plugin before putting this into your config
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -384,11 +395,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+"if exists('*complete_info')
+"  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+"else
+"  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"endif
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -446,3 +459,4 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Snippet next
 let g:coc_snippet_next = '<tab>'
+let g:CommandTPreferredImplementation='lua'
