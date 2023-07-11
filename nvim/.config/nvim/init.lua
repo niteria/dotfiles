@@ -99,6 +99,7 @@ require("user.gitsigns")
 require("user.telescope")
 require("user.toggleterm")
 require("user.coc")
+require("user.projectionist")
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
 
@@ -363,28 +364,6 @@ vim.keymap.set("n", "K", "<Plug>(FerretAckWord)")
 
 -- Don't open a QuickFix window after ,<tab>
 vim.g.qfenter_enable_autoquickfix = 0
-
--- switching back and forth between .cpp and .h files
-vim.keymap.set("n", ",s", ":A<CR>")
-
--- TODO: do it per filetype like
--- https://www.reddit.com/r/vim/comments/76qzoc/advanced_projectionist_templates/doiaxjd
-vim.g.projectionist_heuristics = {
-  ["*"] = {
-    ["*.c"] = {
-      alternate = "{}.h",
-    },
-    ["*.cc"] = {
-      alternate = "{}.h",
-    },
-    ["*.cpp"] = {
-      alternate = "{}.h",
-    },
-    ["*.h"] = {
-      alternate = { "{}.cpp", "{}.cc", "{}.c" },
-    },
-  },
-}
 
 -- Take the list of visible buffers and put them in the tmux buffer (clipboard)
 local tmuxCopyBuffers = function()
