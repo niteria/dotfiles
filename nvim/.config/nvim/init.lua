@@ -91,8 +91,10 @@ Plug("neovimhaskell/haskell-vim")
 Plug("vim-autoformat/vim-autoformat")
 -- vim lua autocompletion
 Plug("rafcamlet/coc-nvim-lua")
+Plug("lewis6991/gitsigns.nvim", { tag = "*" })
 vim.fn["plug#end"]()
 
+require("user.gitsigns")
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
 
