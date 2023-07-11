@@ -90,12 +90,14 @@ Plug("neovimhaskell/haskell-vim")
 Plug("vim-autoformat/vim-autoformat")
 -- vim lua autocompletion
 Plug("rafcamlet/coc-nvim-lua")
+Plug("akinsho/toggleterm.nvim", { tag = "*" })
 Plug("lewis6991/gitsigns.nvim", { tag = "*" })
 Plug("nvim-telescope/telescope.nvim", { tag = "0.1.2" })
 vim.fn["plug#end"]()
 
 require("user.gitsigns")
 require("user.telescope")
+require("user.toggleterm")
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
 
