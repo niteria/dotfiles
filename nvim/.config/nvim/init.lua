@@ -104,9 +104,22 @@ require("lazy").setup({
   { "akinsho/toggleterm.nvim", tag = "v2.7.0" },
   { "lewis6991/gitsigns.nvim", tag = "v0.6" },
   { "nvim-telescope/telescope.nvim", tag = "0.1.2" },
-  -- "folke/which-key.nvim",
-  -- { "folke/neoconf.nvim", cmd = "Neoconf" },
-  -- "folke/neodev.nvim",
+  -- Shows keybindings after a timeout
+  {
+    "folke/which-key.nvim",
+    -- event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 1000
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    tag = "v1.4.3",
+  },
+  -- { "folke/neodev.nvim", opts = {} },
 })
 
 require("user.gitsigns")
