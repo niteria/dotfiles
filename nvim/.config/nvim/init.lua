@@ -90,7 +90,7 @@ Plug("neoclide/coc.nvim", { branch = "release" })
 Plug("neovimhaskell/haskell-vim")
 Plug("vim-autoformat/vim-autoformat")
 -- vim lua autocompletion
-Plug 'rafcamlet/coc-nvim-lua'
+Plug("rafcamlet/coc-nvim-lua")
 vim.fn["plug#end"]()
 
 -- use inkpot colorscheme
@@ -266,7 +266,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "nix,json,cpp,bzl,haskell,python",
+  pattern = "nix,json,cpp,bzl,haskell,python,lua",
   callback = function()
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = 0,
