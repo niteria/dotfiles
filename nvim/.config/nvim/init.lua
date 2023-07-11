@@ -25,10 +25,6 @@ Plug("ciaranm/inkpot")
 Plug("tpope/vim-sensible")
 -- complete command-line (: / etc.) from the current file
 Plug("vim-scripts/CmdlineComplete")
--- Fast file navigation for VIM
-Plug("wincent/command-t", {
-  ["do"] = "cd ruby/command-t/ext/command-t && ruby extconf.rb && make",
-})
 -- :Ack command
 Plug("wincent/ferret")
 -- Bracketed paste
@@ -142,29 +138,7 @@ vim.opt.expandtab = true
 vim.keymap.set("", "<Up>", "gk", { noremap = false })
 vim.keymap.set("", "<Down>", "gj", { noremap = false })
 
--- set up keybindings for command-t
-vim.keymap.set("n", "<localleader>t", function()
-  vim.cmd("CommandT")
-end, { silent = true })
-vim.keymap.set("n", "<localleader>b", function()
-  vim.cmd("CommandTBuffer")
-end, { silent = true })
-vim.keymap.set("n", "<localleader>j", function()
-  vim.cmd("CommandTJump")
-end, { silent = true })
--- use watchman, falling back to find in CommandT
-vim.g.CommandTFileScanner = "watchman"
--- make CommandT open in a new tab
-vim.g.CommandTAcceptSelectionTabMap = "<CR>"
--- I might not need this
-vim.g.CommandTAcceptSelectionSplitMap = ""
-vim.g.CommandTAcceptSelectionVSplitMap = ""
-vim.g.CommandTAcceptSelectionMap = ""
-vim.g.CommandTAcceptSelectionCommand = "tabe"
-vim.g.CommandTAcceptSelectionTabCommand = "tabe"
-vim.g.CommandTAcceptSelectionSplitCommand = "tabe"
-vim.g.CommandTAcceptSelectionVSplitCommand = "tabe"
--- to make CommandT work better
+-- this used to to make CommandT work better, but I don't use CommandT...
 vim.opt.switchbuf = "usetab"
 
 -- Don't use Ex mode, use Q for formatting
@@ -542,4 +516,3 @@ keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
 
 -- Snippet next
 vim.g.coc_snippet_next = "<tab>"
-vim.g.CommandTPreferredImplementation = "lua"
