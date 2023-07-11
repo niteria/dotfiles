@@ -2,9 +2,9 @@
   description = "Useful tools";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/21.11";
+    nixpkgs.url = "github:nixos/nixpkgs/23.05";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     utils.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -16,6 +16,7 @@
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [ "openssl-1.1.1u" ];
         };
 
         add-completions = pkgs.writeScriptBin "add-completions" ''
