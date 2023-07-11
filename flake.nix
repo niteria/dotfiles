@@ -43,6 +43,7 @@
             difftastic
             ethtool
             fastmod
+            fd
             fzf
             gitui
             hexyl
