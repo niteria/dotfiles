@@ -2,3 +2,4 @@ nvim/.config/coc/suggest.txt
 nvim/.config/lazygit/state.yml
 nvim/.config/coc/list_history.dat
 nvim/.config/coc/extensions/node_modules/
+nvim/.config/environment.d

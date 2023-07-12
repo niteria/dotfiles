@@ -59,3 +59,5 @@ function add_path() {
 function vimf() {
   vim $(fzf -m -q "$*");
 }
+# Home Manager Update
+alias hmu="nix run home-manager/release-23.05 -- switch --flake ~/dotfiles/.#niteria"
