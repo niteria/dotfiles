@@ -37,9 +37,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.termguicolors = true
+vim.g.inkpot_black_background = 1
+
 require("lazy").setup({
   -- inkpot colorscheme
-  "ciaranm/inkpot",
+  "davidstelter/inkpot",
   -- sensible defaults
   "tpope/vim-sensible",
   -- common dependencies
@@ -160,6 +163,7 @@ require("lazy").setup({
       })
     end,
   },
+  { "willothy/nvim-cokeline", config = true },
   -- { "folke/neodev.nvim", opts = {} },
 })
 

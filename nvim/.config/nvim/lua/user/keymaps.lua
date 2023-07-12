@@ -8,10 +8,10 @@ local keymap = vim.keymap.set
 
 -- move between tabs with Tab and Shift-Tab
 keymap("n", "<Tab>", function()
-  vim.cmd("tabnext")
+  vim.cmd("bnext")
 end, opts("Next tab"))
 keymap("n", "<S-Tab>", function()
-  vim.cmd("tabprev")
+  vim.cmd("bprev")
 end, opts("Prev tab"))
 
 -- map undotree to U
