@@ -95,24 +95,3 @@ vim.api.nvim_create_autocmd("BufRead", {
   end,
 })
 vim.opt.path:append("**")
-
--- more comment prefixes for toggle_comment
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*.vim",
-  callback = function()
-    vim.b.comment_prefix = '" '
-  end,
-})
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*.ino",
-  callback = function()
-    vim.b.comment_prefix = "// "
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*.lua",
-  callback = function()
-    vim.b.comment_prefix = "-- "
-  end,
-})

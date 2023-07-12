@@ -125,6 +125,41 @@ require("lazy").setup({
     tag = "v1.4.3",
   },
   "nvim-tree/nvim-tree.lua",
+  -- Use C to comment blocks
+  { "numToStr/Comment.nvim", opts = {
+    toggler = { line = "C" },
+    opleader = { line = "C" },
+  } },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+        ensure_installed = {
+          "c",
+          "cpp",
+          "bash",
+          "lua",
+          "vim",
+          "vimdoc",
+          "javascript",
+          "html",
+          "diff",
+          "dot",
+          "elm",
+          "haskell",
+          "json",
+          "nix",
+          "python",
+        },
+        sync_install = false,
+        highlight = { enable = false },
+        indent = { enable = false },
+      })
+    end,
+  },
   -- { "folke/neodev.nvim", opts = {} },
 })
 
