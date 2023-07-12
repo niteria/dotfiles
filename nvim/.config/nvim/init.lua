@@ -140,13 +140,17 @@ require("user.nvim-tree")
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
 
+local function opts(t)
+  return { noremap = true, silent = true, desc = t }
+end
+
 -- move between tabs with Tab and Shift-Tab
 vim.keymap.set("n", "<Tab>", function()
   vim.cmd("tabnext")
-end)
+end, opts("Next tab"))
 vim.keymap.set("n", "<S-Tab>", function()
   vim.cmd("tabprev")
-end)
+end, opts("Prev tab"))
 
 -- backup edited files
 vim.opt.backup = true
@@ -166,7 +170,29 @@ end)
 -- This unsets the "last search pattern" register by hitting return
 vim.keymap.set("n", "<CR>", function()
   vim.cmd("noh")
-end, { silent = true })
+end, opts("Unset last search"))
+
+vim.keymap.set("n", "<C-Up>", "<C-w><Up>", opts("Focus up window"))
+vim.keymap.set("n", "<C-Down>", "<C-w><Down>", opts("Focus down window"))
+vim.keymap.set("n", "<C-Left>", "<C-w><Left>", opts("Focus left window"))
+vim.keymap.set("n", "<C-Right>", "<C-w><Right>", opts("Focus right window"))
+
+-- Don't quit visual mode when indenting
+vim.keymap.set("v", "<", "<gv", opts("Deindent"))
+vim.keymap.set("v", ">", ">gv", opts("Indent"))
+
+-- Make R on rectangular selection name sense
+vim.keymap.set("v", "R", "xgvI", opts("Replace block"))
+
+-- Move text up and down
+-- This makes esc-up do the same thing as the shortcut...
+-- vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", opts("Move down"))
+-- vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", opts("Move up"))
+-- vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts("Move down"))
+-- vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts("Move up"))
+
+-- paste over but don't lose the pasted thing
+vim.keymap.set("v", "p", '"_dP', opts("Paste"))
 
 -- show line numbers
 vim.opt.number = true
@@ -310,8 +336,8 @@ vim.opt.path:append("**")
 vim.opt.wildmenu = true
 
 -- Open gf in new tab
-vim.keymap.set("n", "gF", "gf", { remap = false })
-vim.keymap.set("n", "gf", "<C-w>gf", { remap = false })
+vim.keymap.set("n", "gF", "gf", opts("Go file (buffer)"))
+vim.keymap.set("n", "gf", "<C-w>gf", opts("Go file (tab)"))
 
 -- highlight the 81st column of wide lines...
 vim.opt.colorcolumn = "81"
@@ -320,14 +346,14 @@ vim.opt.colorcolumn = "81"
 vim.opt.tabpagemax = 200
 
 -- make ctrl-a go to begining of the line in command mode
-vim.keymap.set("c", "<C-A>", "<Home>", { remap = false })
+vim.keymap.set("c", "<C-A>", "<Home>", opts("Go to beginning of a line"))
 
 -- edit-reload vimrc
-vim.keymap.set("n", "<leader>ev", ":tabedit $MYVIMRC<cr>", { remap = false })
-vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<cr>", { remap = false })
+vim.keymap.set("n", "<leader>ev", ":tabedit $MYVIMRC<cr>", opts("Edit config"))
+vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<cr>", opts("Source config"))
 
 -- exit insert mode with jk
-vim.keymap.set({ "i", "n" }, "jk", "<esc>", { remap = false })
+vim.keymap.set({ "i", "n" }, "jk", "<esc>", opts("Exit insert mode"))
 
 -- always have a status line
 vim.opt.laststatus = 2
