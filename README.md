@@ -64,3 +64,7 @@ In Tmux:
 ## Nix
 
 nix develop ~/dotfiles
+
+## Home manager
+
+nix run home-manager/release-23.05 -- switch --flake .#niteria

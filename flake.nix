@@ -7,89 +7,48 @@
     #    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     utils.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, utils, ... }@inputs:
-    utils.lib.eachSystem [ "x86_64-linux" ] (system:
-      let
+  outputs = { self, nixpkgs, utils, home-manager, ... }@inputs:
+    let
+      system = "x86_64-linux";
 
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [ "openssl-1.1.1u" ];
-        };
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        config.permittedInsecurePackages = [ "openssl-1.1.1u" ];
+      };
 
-        add-completions = pkgs.writeScriptBin "add-completions" ''
+      nixdots = pkgs.stdenvNoCC.mkDerivation rec {
+        name = "nixdots";
+        src = ./.;
+
+        nativeBuildInputs = with pkgs; [ ];
+
+        buildInputs = import ./nix/packages.nix { inherit pkgs; };
+
+        preBuild = "";
+
+        buildPhase = "";
+
+        installPhase = "";
+
+        shellHook = ''
           . "${pkgs.bash-completion}/etc/profile.d/bash_completion.sh"
           . "${pkgs.git}/share/bash-completion/completions/git"
+          eval "$(zoxide init bash)"
         '';
+      };
 
-        nixdots = pkgs.stdenvNoCC.mkDerivation rec {
-          name = "nixdots";
-          src = ./.;
-
-          nativeBuildInputs = with pkgs; [ ];
-
-          x86-info-term = pkgs.callPackage ./tools/x86-info-term.nix { };
-
-          buildInputs = with pkgs; [
-            add-completions
-            arcanist
-            atop
-            bintools
-            btop
-            htop
-            glances
-            difftastic
-            ethtool
-            fastmod
-            fd
-            fzf
-            gcc
-            gitui
-            hexyl
-            htop
-            nodePackages.js-beautify
-            lazygit
-            lsd
-            # will be renamed to lua-language-server
-            sumneko-lua-language-server
-            mcfly
-            neovim
-            nix-prefetch-github
-            nixfmt
-            nodejs
-            #            perf-linux
-            php
-            pstree
-            pciutils
-            ripgrep
-            rnix-lsp
-            stow
-            stylua
-            sysz
-            tmux
-            unzip
-            wget
-            x86-info-term
-            yarn
-            zoxide
-          ];
-
-          preBuild = "";
-
-          buildPhase = "";
-
-          installPhase = "";
-
-          shellHook = ''
-            . "${pkgs.bash-completion}/etc/profile.d/bash_completion.sh"
-            . "${pkgs.git}/share/bash-completion/completions/git"
-            eval "$(zoxide init bash)"
-          '';
-        };
-
-        flake = { defaultPackage = nixdots; };
-
-      in flake);
+    in {
+      defaultPackage.${system} = nixdots;
+      homeConfigurations."niteria" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./home.nix ];
+      };
+    };
 }
