@@ -30,6 +30,7 @@ in with pkgs; [
   # will be renamed to lua-language-server
   sumneko-lua-language-server
   mcfly
+  mosh
   neovim
   nix-prefetch-github
   nixfmt
