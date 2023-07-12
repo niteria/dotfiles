@@ -355,7 +355,9 @@ preexec_invoke_exec () {
 trap 'preexec_invoke_exec' DEBUG
 
 alias vimu='vim -u ~/.vimrc-fast --noplugin'
-export TERM=screen-256color
+
+# setting TERM in bash is not recommended
+#export TERM=screen-256color
 
 ### disable Ctrl-S
 stty stop ''
