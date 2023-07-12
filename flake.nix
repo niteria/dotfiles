@@ -45,6 +45,7 @@
             fastmod
             fd
             fzf
+            gcc
             gitui
             hexyl
             htop
