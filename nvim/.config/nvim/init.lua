@@ -1,4 +1,5 @@
 -- probably unnecessary, but just in case
+--
 vim.opt.compatible = false
 
 --  Set up with:
@@ -18,6 +19,10 @@ end
 -- leader and localleader
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
+
+-- disable netrw at the very start of your init.lua (for nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -119,6 +124,7 @@ require("lazy").setup({
     },
     tag = "v1.4.3",
   },
+  "nvim-tree/nvim-tree.lua",
   -- { "folke/neodev.nvim", opts = {} },
 })
 
@@ -129,6 +135,8 @@ require("user.coc")
 require("user.projectionist")
 require("user.tmux-buffers")
 require("user.autoformat")
+require("user.nvim-tree")
+
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
 
