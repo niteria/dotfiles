@@ -136,21 +136,10 @@ require("user.projectionist")
 require("user.tmux-buffers")
 require("user.autoformat")
 require("user.nvim-tree")
+require("user.keymaps")
 
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
-
-local function opts(t)
-  return { noremap = true, silent = true, desc = t }
-end
-
--- move between tabs with Tab and Shift-Tab
-vim.keymap.set("n", "<Tab>", function()
-  vim.cmd("tabnext")
-end, opts("Next tab"))
-vim.keymap.set("n", "<S-Tab>", function()
-  vim.cmd("tabprev")
-end, opts("Prev tab"))
 
 -- backup edited files
 vim.opt.backup = true
@@ -162,38 +151,6 @@ if vim.fn.has("persistent_undo") == 1 then
   vim.opt.undofile = true
 end
 
--- map undotree to U
-vim.keymap.set("n", "U", function()
-  vim.cmd("UndotreeToggle")
-end)
-
--- This unsets the "last search pattern" register by hitting return
-vim.keymap.set("n", "<CR>", function()
-  vim.cmd("noh")
-end, opts("Unset last search"))
-
-vim.keymap.set("n", "<C-Up>", "<C-w><Up>", opts("Focus up window"))
-vim.keymap.set("n", "<C-Down>", "<C-w><Down>", opts("Focus down window"))
-vim.keymap.set("n", "<C-Left>", "<C-w><Left>", opts("Focus left window"))
-vim.keymap.set("n", "<C-Right>", "<C-w><Right>", opts("Focus right window"))
-
--- Don't quit visual mode when indenting
-vim.keymap.set("v", "<", "<gv", opts("Deindent"))
-vim.keymap.set("v", ">", ">gv", opts("Indent"))
-
--- Make R on rectangular selection name sense
-vim.keymap.set("v", "R", "xgvI", opts("Replace block"))
-
--- Move text up and down
--- This makes esc-up do the same thing as the shortcut...
--- vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", opts("Move down"))
--- vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==", opts("Move up"))
--- vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts("Move down"))
--- vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts("Move up"))
-
--- paste over but don't lose the pasted thing
-vim.keymap.set("v", "p", '"_dP', opts("Paste"))
-
 -- show line numbers
 vim.opt.number = true
 
@@ -202,15 +159,8 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
 
--- arrows move between "terminal lines" not "vim lines"
-vim.keymap.set("", "<Up>", "gk", { noremap = false })
-vim.keymap.set("", "<Down>", "gj", { noremap = false })
-
 -- this used to to make CommandT work better, but I don't use CommandT...
 vim.opt.switchbuf = "usetab"
-
--- Don't use Ex mode, use Q for formatting
-vim.keymap.set("", "Q", "gq", { noremap = false })
 
 -- Only do this part when compiled with support for autocommands.
 if vim.fn.has("autocmd") == 1 then
@@ -247,9 +197,6 @@ vim.opt.virtualedit = "block"
 vim.opt.listchars = { tab = ">-", trail = "·", eol = "$" }
 vim.opt.foldmethod = "syntax"
 vim.opt.foldlevel = 10000
-
--- Don't remove indent even if I don't write anything on that line
-vim.keymap.set("i", "<CR>", "<CR> <BS>")
 
 -- directory for the swap file
 vim.opt.directory = {
@@ -335,25 +282,11 @@ vim.opt.path:append("**")
 -- better menus?
 vim.opt.wildmenu = true
 
--- Open gf in new tab
-vim.keymap.set("n", "gF", "gf", opts("Go file (buffer)"))
-vim.keymap.set("n", "gf", "<C-w>gf", opts("Go file (tab)"))
-
 -- highlight the 81st column of wide lines...
 vim.opt.colorcolumn = "81"
 
 -- increase open tab limit
 vim.opt.tabpagemax = 200
-
--- make ctrl-a go to begining of the line in command mode
-vim.keymap.set("c", "<C-A>", "<Home>", opts("Go to beginning of a line"))
-
--- edit-reload vimrc
-vim.keymap.set("n", "<leader>ev", ":tabedit $MYVIMRC<cr>", opts("Edit config"))
-vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<cr>", opts("Source config"))
-
--- exit insert mode with jk
-vim.keymap.set({ "i", "n" }, "jk", "<esc>", opts("Exit insert mode"))
 
 -- always have a status line
 vim.opt.laststatus = 2
@@ -400,12 +333,6 @@ vim.opt.scrolloff = 7
 
 -- Increase memory limit for patterns from 1mb to 10mb
 vim.opt.maxmempattern = 10000
-
--- Do :Ack with a word under cursor with K
-vim.keymap.set("n", "K", "<Plug>(FerretAckWord)")
---  Do :Ack with a selected text
---    Unfortunately broken, doesn't handle spaces
---  vmap K "xy:let @x = substitute(@x, ' ', '\\ ', 'g')<CR>:Ack --literal <C-R>x<CR>
 
 -- Don't open a QuickFix window after ,<tab>
 vim.g.qfenter_enable_autoquickfix = 0
