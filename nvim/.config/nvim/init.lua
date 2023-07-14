@@ -163,7 +163,9 @@ require("lazy").setup({
       })
     end,
   },
+  -- Show open buffers like tabs
   { "willothy/nvim-cokeline", config = true },
+  -- Color matching parenthesis
   "HiPhish/rainbow-delimiters.nvim",
   -- { "folke/neodev.nvim", opts = {} },
 })
