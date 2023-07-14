@@ -171,6 +171,15 @@ require("lazy").setup({
 
   -- Adds :GV for Git Viewer
   "junegunn/gv.vim",
+  -- Dependency of leap
+  "tpope/vim-repeat",
+  {
+    "ggandor/leap.nvim",
+    init = function()
+      require("leap").add_default_mappings()
+    end,
+  },
+
   -- { "folke/neodev.nvim", opts = {} },
 })
 
