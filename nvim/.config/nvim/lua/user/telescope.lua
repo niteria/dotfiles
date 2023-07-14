@@ -1,4 +1,8 @@
-local builtin = require("telescope.builtin")
+local status_ok, builtin = pcall(require, "telescope.builtin")
+if not status_ok then
+  return
+end
+
 vim.keymap.set("n", "<localleader>ff", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<localleader>fg", builtin.live_grep, { desc = "Grep" })
 vim.keymap.set("n", "<localleader>fb", builtin.buffers, { desc = "Find buffers" })
