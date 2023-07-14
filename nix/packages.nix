@@ -29,6 +29,7 @@ in with pkgs; [
   lsd
   # will be renamed to lua-language-server
   sumneko-lua-language-server
+  manix
   mcfly
   mosh
   neovim
