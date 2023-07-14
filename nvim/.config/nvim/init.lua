@@ -171,12 +171,14 @@ require("user.settings")
 require("user.gitsigns")
 require("user.telescope")
 require("user.toggleterm")
+require("user.keymaps")
+-- user.coc must happen after user.keymaps because some mappings conflict
+-- TODO: debug this further
 require("user.coc")
 require("user.projectionist")
 require("user.tmux-buffers")
 require("user.autoformat")
 require("user.nvim-tree")
-require("user.keymaps")
 require("user.autocommands")
 
 -- use inkpot colorscheme
