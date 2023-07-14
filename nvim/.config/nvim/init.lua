@@ -167,6 +167,7 @@ require("lazy").setup({
   { "willothy/nvim-cokeline", config = true },
   -- Color matching parenthesis
   "HiPhish/rainbow-delimiters.nvim",
+  "luc-tielen/telescope_hoogle",
   -- { "folke/neodev.nvim", opts = {} },
 })
 

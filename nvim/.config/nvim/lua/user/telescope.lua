@@ -4,6 +4,12 @@ if not status_ok then
   return
 end
 
+local status_ok2, telescope = pcall(require, "telescope")
+
+if not status_ok2 then
+  return
+end
+
 -- Cherry-picking https://github.com/nvim-telescope/telescope.nvim/pull/2333
 local function grep_string(opts)
   local conf = require("telescope.config").values
@@ -120,3 +126,5 @@ vim.keymap.set("n", "<localleader>fo", builtin.oldfiles, { desc = "Find old file
 vim.keymap.set("n", "<localleader>fa", builtin.builtin, { desc = "Find finders" })
 vim.keymap.set("n", "G", builtin.grep_string, { desc = "Grep string" })
 vim.keymap.set("v", "G", grep_string, { desc = "Grep string" })
+
+telescope.load_extension("hoogle")
