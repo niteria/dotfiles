@@ -164,6 +164,7 @@ require("lazy").setup({
     end,
   },
   { "willothy/nvim-cokeline", config = true },
+  "HiPhish/rainbow-delimiters.nvim",
   -- { "folke/neodev.nvim", opts = {} },
 })
 
@@ -180,6 +181,7 @@ require("user.tmux-buffers")
 require("user.autoformat")
 require("user.nvim-tree")
 require("user.autocommands")
+require("user.rainbow-delimiters")
 
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
