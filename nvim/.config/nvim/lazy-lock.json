@@ -9,6 +9,7 @@
   "fzf": { "branch": "master", "commit": "547e101f1d6bf326d286bac0fb3272738a92a67f" },
   "ghcid": { "branch": "master", "commit": "19b0e912da74341993a005aa53a0c57fd2afc800" },
   "gitsigns.nvim": { "branch": "main", "commit": "bb808fc7376ed7bac0fbe8f47b83d4bf01738167" },
+  "gv.vim": { "branch": "master", "commit": "320cc8c477c5acc4fa0e52a460d87b2af54fa051" },
   "haskell-vim": { "branch": "master", "commit": "f35d02204b4813d1dbe8b0e98cc39701a4b8e15e" },
   "inkpot": { "branch": "master", "commit": "70a0cf752c6292c7966c4adf332105b82a11a154" },
   "lazy.nvim": { "branch": "main", "commit": "14d76aac4bd3ff07c1fca074c210f28f766a931e" },

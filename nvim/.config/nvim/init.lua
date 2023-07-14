@@ -168,6 +168,9 @@ require("lazy").setup({
   -- Color matching parenthesis
   "HiPhish/rainbow-delimiters.nvim",
   "luc-tielen/telescope_hoogle",
+
+  -- Adds :GV for Git Viewer
+  "junegunn/gv.vim",
   -- { "folke/neodev.nvim", opts = {} },
 })
 
