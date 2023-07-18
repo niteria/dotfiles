@@ -74,3 +74,8 @@ vim.opt.signcolumn = "yes"
 
 -- Increase memory limit for patterns from 1mb to 10mb
 vim.opt.maxmempattern = 10000
+
+vim.g.haskell_conceal = 0
+vim.g.haskell_multiline_strings = 1
+vim.g.haskell_conceal_enumerations = 0
+vim.g.haskell_haddock = 1
