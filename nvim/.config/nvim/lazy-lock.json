@@ -15,6 +15,7 @@
   "lazy.nvim": { "branch": "main", "commit": "14d76aac4bd3ff07c1fca074c210f28f766a931e" },
   "leap.nvim": { "branch": "main", "commit": "bae0433949ba54eb1df629f6e94b33af5922922f" },
   "neomake-platformio": { "branch": "master", "commit": "dfaf5768916e1fa21e9b9843606bbff2ce1a111e" },
+  "neovim-session-manager": { "branch": "master", "commit": "51827268c5ee56567b7033af9ed547ab704553b9" },
   "nvim-cokeline": { "branch": "main", "commit": "904dc18d017cdf5c7c52a6455fd2a8d6f9a8bc3b" },
   "nvim-tree.lua": { "branch": "master", "commit": "a708bd2413d467929b5019ec1bce7b1f428438bc" },
   "nvim-treesitter": { "branch": "master", "commit": "575f5a4b1fcb60c1ac4f560c46a5171454d674ca" },

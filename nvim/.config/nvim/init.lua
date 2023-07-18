@@ -179,6 +179,8 @@ require("lazy").setup({
       require("leap").add_default_mappings()
     end,
   },
+  -- session management
+  "Shatur/neovim-session-manager",
 
   -- { "folke/neodev.nvim", opts = {} },
 })
@@ -197,6 +199,7 @@ require("user.autoformat")
 require("user.nvim-tree")
 require("user.autocommands")
 require("user.rainbow-delimiters")
+require("user.neovim-session-manager")
 
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")

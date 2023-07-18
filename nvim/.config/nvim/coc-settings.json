@@ -40,7 +40,17 @@
     },
     "lua": {
       "command": "lua-language-server",
-      "rootPatterns": [".git"],
+      "rootPatterns": [".luarc.json"],
+      "requireRootPattern": true,
+      "settings": {
+        "Lua": {
+          "diagnostics": {
+            "globals": [
+              "vim"
+            ]
+          }
+        }
+      },
       "filetypes": ["lua"]
     }
   }
