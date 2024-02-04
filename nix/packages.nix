@@ -40,6 +40,8 @@ in with pkgs; [
   php
   pstree
   pciutils
+  # autoreloading markdown renderer
+  python311Packages.grip
   ripgrep
   rnix-lsp
   stow
