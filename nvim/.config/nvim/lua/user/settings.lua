@@ -79,3 +79,6 @@ vim.g.haskell_conceal = 0
 vim.g.haskell_multiline_strings = 1
 vim.g.haskell_conceal_enumerations = 0
 vim.g.haskell_haddock = 1
+
+-- Disable mouse click
+vim.opt.mouse = ""
