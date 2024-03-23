@@ -1,3 +1,5 @@
 [user]
 	email = niteria@gmail.com
 	name = niteria
+[core]
+	editor = nvim
