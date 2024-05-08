@@ -61,3 +61,47 @@ function vimf() {
 }
 # Home Manager Update
 alias hmu="nix run home-manager/release-23.05 -- switch --flake ~/dotfiles/.#niteria"
+
+# rocinante stuff
+
+function rconnect() {
+  CLIENT="$1"
+  HOST="$2"
+  [ -z "$TMUX" ] && "$CLIENT" "$HOST"
+  [ -n "$TMUX" ] && tmux detach-client -E "$CLIENT $HOST"
+}
+
+function tconnect() {
+  CLIENT="$1"
+  HOST="$(tailscale ip --4 $2)"
+  rconnect "$CLIENT" "$HOST"
+}
+
+
+function srailgun() {
+  rconnect ssh railgun
+}
+
+function mrailgun() {
+  rconnect mosh railgun
+}
+
+function mmedina() {
+  rconnect mosh medina
+}
+
+function mtailgun() {
+  tconnect mosh railgun
+}
+
+function mwatchtower() {
+  tconnect mosh watchtower
+}
+
+function mgochujang() {
+  tconnect mosh gochujang
+}
+
+function sgochujang() {
+  rconnect ssh gochujang
+}
