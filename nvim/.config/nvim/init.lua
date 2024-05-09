@@ -156,6 +156,7 @@ require("lazy").setup({
           "json",
           "nix",
           "python",
+          "purescript",
         },
         sync_install = false,
         highlight = { enable = false },
@@ -183,6 +184,7 @@ require("lazy").setup({
   "Shatur/neovim-session-manager",
 
   -- { "folke/neodev.nvim", opts = {} },
+  "purescript-contrib/purescript-vim",
 })
 
 require("user.settings")
