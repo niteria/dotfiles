@@ -6,6 +6,9 @@ vim.g.formatdef_stylish_haskell = '"stylish-haskell"'
 vim.g.formatters_haskell = { "fourmolu", "stylish_haskell" }
 vim.g.run_all_formatters_haskell = 1
 
+vim.g.formatdef_purs_tidy = '"purs-tidy format"'
+vim.g.formatters_purescript = { "purs_tidy" }
+
 -- We limit formatting to BUILD.bazel files because without specifying -type
 -- buildifier won't sort dependencies.
 -- If we wanted to extend this, we'd probably need a separate definition for

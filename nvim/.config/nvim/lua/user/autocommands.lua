@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "nix,json,cpp,bzl,haskell,python,lua",
+  pattern = "nix,json,cpp,bzl,haskell,python,lua,purescript",
   callback = function()
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = 0,
