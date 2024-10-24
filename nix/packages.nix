@@ -16,6 +16,8 @@ in with pkgs; [
   htop
   glances
   difftastic
+  # open diff in the browser with diff2html -s side
+  nodePackages.diff2html-cli
   ethtool
   fastmod
   fd
