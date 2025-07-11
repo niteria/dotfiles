@@ -13,7 +13,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, home-manager, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      utils,
+      home-manager,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
 
@@ -44,7 +51,8 @@
         '';
       };
 
-    in {
+    in
+    {
       defaultPackage.${system} = nixdots;
       homeConfigurations."niteria" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

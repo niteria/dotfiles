@@ -7,7 +7,9 @@ let
     . "${pkgs.git}/share/bash-completion/completions/git"
   '';
 
-in with pkgs; [
+in
+with pkgs;
+[
   add-completions
   arcanist
   atop
