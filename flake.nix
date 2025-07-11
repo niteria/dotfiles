@@ -13,7 +13,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, home-manager, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
       system = "x86_64-linux";
 
@@ -23,11 +28,11 @@
         config.permittedInsecurePackages = [ "openssl-1.1.1u" ];
       };
 
-      nixdots = pkgs.stdenvNoCC.mkDerivation rec {
+      nixdots = pkgs.stdenvNoCC.mkDerivation {
         name = "nixdots";
         src = ./.;
 
-        nativeBuildInputs = with pkgs; [ ];
+        nativeBuildInputs = [ ];
 
         buildInputs = import ./nix/packages.nix { inherit pkgs; };
 
@@ -44,7 +49,8 @@
         '';
       };
 
-    in {
+    in
+    {
       defaultPackage.${system} = nixdots;
       homeConfigurations."niteria" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
