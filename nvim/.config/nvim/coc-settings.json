@@ -33,10 +33,18 @@
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     },
     "nix": {
-      "command": "rnix-lsp",
+      "command": "nil",
       "filetypes": [
         "nix"
-      ]
+      ],
+      "rootPatterns": ["flake.nix"],
+      "settings": {
+        "nil": {
+          "formatting": {
+            "command": ["nixfmt"]
+          }
+        }
+      }
     },
     "lua": {
       "command": "lua-language-server",

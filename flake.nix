@@ -2,25 +2,18 @@
   description = "Useful tools";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/25.05";
 
     #    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     utils.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      utils,
-      home-manager,
-      ...
-    }@inputs:
+  outputs = { self, nixpkgs, utils, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -51,8 +44,7 @@
         '';
       };
 
-    in
-    {
+    in {
       defaultPackage.${system} = nixdots;
       homeConfigurations."niteria" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

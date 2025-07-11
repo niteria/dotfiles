@@ -7,11 +7,9 @@ let
     . "${pkgs.git}/share/bash-completion/completions/git"
   '';
 
-in
-with pkgs;
-[
+in with pkgs; [
   add-completions
-  arcanist
+  #  arcanist  # removed from nixpkgs
   atop
   bintools
   btop
@@ -37,8 +35,9 @@ with pkgs;
   mcfly
   mosh
   neovim
+  nil
   nix-prefetch-github
-  nixfmt
+  nixfmt-rfc-style
   nodejs
   #            perf-linux
   php
@@ -47,7 +46,7 @@ with pkgs;
   # autoreloading markdown renderer
   python311Packages.grip
   ripgrep
-  rnix-lsp
+  # rnix-lsp -> nil
   stow
   stylua
   sysz

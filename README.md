@@ -67,4 +67,4 @@ nix develop ~/dotfiles
 
 ## Home manager
 
-nix run home-manager/release-23.05 -- switch --flake .#niteria
+nix run home-manager/release-25.05 -- switch --flake .#niteria
