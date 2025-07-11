@@ -1,0 +1,27 @@
+#[terminal.shell]
+#program = "/bin/bash"
+
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+size = 16
+
+[cursor]
+style = { shape = "Underline" }
+unfocused_hollow = false
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [
+  { key = "Left", mods = "Command", action = "SelectPreviousTab" },
+  { key = "Right", mods = "Command", action = "SelectNextTab" },
+]
+
+[[hints.enabled]]
+regex = '(mailto:|https?://|ftp://)[^\s]+'
+command = "xdg-open"
+
+[hints.enabled.mouse]
+enabled = true
+mods = "Control"
