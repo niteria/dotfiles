@@ -17,6 +17,7 @@ with pkgs;
   btop
   htop
   glances
+  devenv
   difftastic
   # open diff in the browser with diff2html -s side
   nodePackages.diff2html-cli
