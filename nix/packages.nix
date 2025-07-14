@@ -7,7 +7,9 @@ let
     . "${pkgs.git}/share/bash-completion/completions/git"
   '';
 
-in with pkgs; [
+in
+with pkgs;
+[
   add-completions
   #  arcanist  # removed from nixpkgs
   atop
@@ -26,9 +28,11 @@ in with pkgs; [
   gitui
   hexyl
   htop
+  jq
   nodePackages.js-beautify
   lazygit
   lsd
+  lsof
   # will be renamed to lua-language-server
   sumneko-lua-language-server
   manix
