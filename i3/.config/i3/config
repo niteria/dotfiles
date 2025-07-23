@@ -283,3 +283,6 @@ mouse_warping none
 
 # my "microphone media key" emits this
 bindsym Mod4+c exec --no-startup-id ~/.config/i3/toggle-side-workspaces.sh
+
+# apply xfce display profile automatically
+bindsym Mod4+` exec --no-startup-id ~/.config/i3/apply-profile-on-wake-up.sh

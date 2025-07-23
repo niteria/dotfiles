@@ -202,6 +202,7 @@ require("user.nvim-tree")
 require("user.autocommands")
 require("user.rainbow-delimiters")
 require("user.neovim-session-manager")
+require("user.python-auto")
 
 -- use inkpot colorscheme
 vim.cmd("colorscheme inkpot")
