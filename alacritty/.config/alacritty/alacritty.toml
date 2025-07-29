@@ -3,7 +3,7 @@
 
 [font]
 normal = { family = "Hack Nerd Font", style = "Regular" }
-size = 16
+size = 12
 
 [cursor]
 style = { shape = "Underline" }
